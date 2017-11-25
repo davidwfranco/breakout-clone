@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ball
+  - Boundaries
+  - Background
+  - Floor
+  - Blocks
   layers:
   - Default
   - TransparentFX

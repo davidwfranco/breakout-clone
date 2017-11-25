@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 	public static GameController instance;
@@ -12,10 +13,10 @@ public class GameController : MonoBehaviour {
     public float maxHeigth;
     public bool gameOver;
     public GameObject gameOverText;
+    private int score = 0;
+    public Text scoreText;    
 
-	/// <summary>
-	/// Awake is called when the script instance is being loaded.
-	/// </summary>
+	// Awake is called when the script instance is being loaded.
 	void Awake()
 	{
 		if (instance == null)
@@ -52,5 +53,15 @@ public class GameController : MonoBehaviour {
 	{
         gameOver = true;
         gameOverText.SetActive(true);
+    }
+
+    public void Scored()
+    {
+		if (!gameOver) {
+			score++;
+			scoreText.text = "Score: " + score.ToString();
+		} else {
+			return;
+		}
     }
 }
