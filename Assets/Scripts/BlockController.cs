@@ -16,12 +16,11 @@ public class BlockController : MonoBehaviour {
 
 	// Sent when an incoming collider makes contact with this object's
 	// collider (2D physics only).
-	void OnCollisionEnter2D(Collision2D other)
+	void OnCollisionExit2D(Collision2D other)
 	{
 		if (other.collider.CompareTag("Ball"))
 		{
 			Destroy(gameObject);
-			GameController.instance.Scored();
 		}
 	}
 }

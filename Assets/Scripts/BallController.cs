@@ -5,12 +5,12 @@ using UnityEngine;
 public class BallController : MonoBehaviour {
 	private Rigidbody2D rdb2d;
 	public float ballSpeed;
+	public GameObject player;
+	private bool gameOn = false;
 
 	// Use this for initialization
 	void Start () {
 		rdb2d = GetComponent<Rigidbody2D>();
-
-		rdb2d.velocity = new Vector2(Random.Range(-2,2), ballSpeed);
 	}
 	
 	// Update is called once per frame
@@ -24,6 +24,19 @@ public class BallController : MonoBehaviour {
 		{
 			rdb2d.gravityScale = 0;
 		}
+
+		if (!gameOn)
+		{
+			rdb2d.transform.position = new Vector2 (player.transform.position.x, (player.transform.position.y + 0.4f));
+			
+			if (Input.GetKeyDown(KeyCode.Space))
+			{
+				rdb2d.velocity = new Vector2(Random.Range(-3,3), ballSpeed);
+				gameOn = true;
+			}
+		}
+
+
 	}
 
  	// Create a function that receives the ball position, the player position and the player width
@@ -35,13 +48,26 @@ public class BallController : MonoBehaviour {
 
 	// Sent when an incoming collider makes contact with this object's
 	// collider (2D physics only).
-	void OnCollisionEnter2D(Collision2D other)
+	void OnCollisionExit2D(Collision2D other)
 	{
 		if (other.collider.CompareTag("Player"))
 		{
-			float resBallCollision = ballCollision(transform.position, other.transform.position, ((BoxCollider2D)other.collider).size.x);
+			float resBallCollision = ballCollision(transform.position, other.transform.position, ((CapsuleCollider2D)other.collider).size.x);
 			Vector2 newDirection = new Vector2(resBallCollision,1).normalized;
 			rdb2d.velocity = newDirection * ballSpeed;
+		}
+		else if (other.collider.CompareTag("Blocks"))
+		{
+			GameController.instance.Scored();
+			ballSpeed += 1;
+			if (rdb2d.velocity.y > 0)
+			{
+				rdb2d.velocity = new Vector2(transform.position.x, ballSpeed);	
+			}
+			else 
+			{
+				rdb2d.velocity = new Vector2(transform.position.x, -ballSpeed);	
+			}
 		}
 	}
 

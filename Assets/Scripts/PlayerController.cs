@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour {
 	private Vector2 targetPotision;
 	private float targetWidth;
 	private GameController gControl;
+	public float moveSpeed;
+	private float moveHDir;
 
 	// Use this for initialization
 	void Start () {
@@ -19,19 +21,23 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per physics timestamp
 	void FixedUpdate () {
 		if (!gControl.gameOver) {
+			//keyboard control v2
+			moveHDir = Input.GetAxisRaw("Horizontal");
+			rdb2d.velocity = new Vector2((moveSpeed * moveHDir), 0);
+
 			//keyboard control
-			if (Input.GetKey("left")) 
-			{
-				rdb2d.velocity = new Vector2(-5, 0);
-			}
-			else if (Input.GetKey("right")) 
-			{
-				rdb2d.velocity = new Vector2(5, 0);				
-			}
-			else 
-			{
-				rdb2d.velocity = Vector2.zero;
-			}
+			// if (Input.GetKey("left")) 
+			// {
+			// 	rdb2d.velocity = new Vector2(-5, 0);
+			// }
+			// else if (Input.GetKey("right")) 
+			// {
+			// 	rdb2d.velocity = new Vector2(5, 0);				
+			// }
+			// else 
+			// {
+			// 	rdb2d.velocity = Vector2.zero;
+			// }
 
 			//mouse pointer control
 			// rawPosition = gControl.cam.ScreenToWorldPoint (Input.mousePosition);

@@ -43,7 +43,7 @@ public class GameController : MonoBehaviour {
 	void Update () 
 	{
 		//Restart the Game
-		if (gameOver && Input.anyKey) 
+		if (gameOver && Input.GetKeyDown("space")) 
 		{
 			//Make unity reload the scene currenctly active
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -58,7 +58,7 @@ public class GameController : MonoBehaviour {
     public void Scored()
     {
 		if (!gameOver) {
-			score++;
+            score++;
 			scoreText.text = "Score: " + score.ToString();
 		} else {
 			return;
