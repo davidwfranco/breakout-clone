@@ -25,18 +25,16 @@ public class BallController : MonoBehaviour {
 			rdb2d.gravityScale = 0;
 		}
 
+		//Stuck the ball to the player ate the begining of the game
 		if (!gameOn)
 		{
 			rdb2d.transform.position = new Vector2 (player.transform.position.x, (player.transform.position.y + 0.4f));
-			
 			if (Input.GetKeyDown(KeyCode.Space))
 			{
 				rdb2d.velocity = new Vector2(Random.Range(-3,3), ballSpeed);
 				gameOn = true;
 			}
 		}
-
-
 	}
 
  	// Create a function that receives the ball position, the player position and the player width
@@ -50,12 +48,15 @@ public class BallController : MonoBehaviour {
 	// collider (2D physics only).
 	void OnCollisionExit2D(Collision2D other)
 	{
+		// If the ball collides with the player it bounces the ball upwards in a different horizontal position
+		// depending on how faz it hits from the half point
 		if (other.collider.CompareTag("Player"))
 		{
 			float resBallCollision = ballCollision(transform.position, other.transform.position, ((CapsuleCollider2D)other.collider).size.x);
 			Vector2 newDirection = new Vector2(resBallCollision,1).normalized;
 			rdb2d.velocity = newDirection * ballSpeed;
 		}
+		// If it hits a block, add score and speed up the ball
 		else if (other.collider.CompareTag("Blocks"))
 		{
 			GameController.instance.Scored();
@@ -75,6 +76,7 @@ public class BallController : MonoBehaviour {
 	// object (2D physics only).
 	void OnTriggerEnter2D(Collider2D other)
 	{
+		// Destroy the ball on collision with the ground
 		if (other.GetComponent<Collider2D>().CompareTag("Floor"))
 		{	
 			Destroy(gameObject);
