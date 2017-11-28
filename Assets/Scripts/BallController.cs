@@ -4,36 +4,44 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour {
 	private Rigidbody2D rdb2d;
-	public float ballSpeed;
+	private float ballSpeed;
 	public GameObject player;
 	private bool gameOn = false;
 
 	// Use this for initialization
 	void Start () {
 		rdb2d = GetComponent<Rigidbody2D>();
+		ballSpeed = GameController.instance.initBallSpeed;
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
 		//Activate gravity for some frames to preven the ball of been stuck going sideways
-		if (rdb2d.velocity.y > -2 && rdb2d.velocity.y < 2)
+		if (!GameController.instance.gameOver)
 		{
-			rdb2d.gravityScale = 3;
+			if (rdb2d.velocity.y > -2 && rdb2d.velocity.y < 2)
+			{
+				rdb2d.gravityScale = 3;
+			}
+			else
+			{
+				rdb2d.gravityScale = 0;
+			}
+
+			//Stuck the ball to the player ate the begining of the game
+			if (!gameOn)
+			{
+				rdb2d.transform.position = new Vector2 (player.transform.position.x, (player.transform.position.y + 0.4f));
+				if (Input.GetKeyDown(KeyCode.Space))
+				{
+					rdb2d.velocity = new Vector2(Random.Range(-3,3), ballSpeed);
+					gameOn = true;
+				}
+			}
 		}
 		else
 		{
-			rdb2d.gravityScale = 0;
-		}
-
-		//Stuck the ball to the player ate the begining of the game
-		if (!gameOn)
-		{
-			rdb2d.transform.position = new Vector2 (player.transform.position.x, (player.transform.position.y + 0.4f));
-			if (Input.GetKeyDown(KeyCode.Space))
-			{
-				rdb2d.velocity = new Vector2(Random.Range(-3,3), ballSpeed);
-				gameOn = true;
-			}
+			rdb2d.velocity = Vector2.zero;
 		}
 	}
 
@@ -60,14 +68,20 @@ public class BallController : MonoBehaviour {
 		else if (other.collider.CompareTag("Blocks"))
 		{
 			GameController.instance.Scored();
-			ballSpeed += 1;
-			if (rdb2d.velocity.y > 0)
+			
+			if (GameController.instance.GetScore() % 2 == 0)
 			{
-				rdb2d.velocity = new Vector2(transform.position.x, ballSpeed);	
-			}
-			else 
-			{
-				rdb2d.velocity = new Vector2(transform.position.x, -ballSpeed);	
+				Debug.Log("BS Antes: " + ballSpeed);
+				ballSpeed += 1;
+				Debug.Log("BS Depois: " + ballSpeed);
+				if (rdb2d.velocity.y > 0)
+				{
+					rdb2d.velocity = new Vector2(rdb2d.velocity.x, ballSpeed);	
+				}
+				else 
+				{
+					rdb2d.velocity = new Vector2(rdb2d.velocity.x, -ballSpeed);	
+				}
 			}
 		}
 	}
@@ -79,8 +93,11 @@ public class BallController : MonoBehaviour {
 		// Destroy the ball on collision with the ground
 		if (other.GetComponent<Collider2D>().CompareTag("Floor"))
 		{	
-			Destroy(gameObject);
-			GameController.instance.Endgame();
+			rdb2d.velocity = Vector2.zero;
+			ballSpeed = GameController.instance.initBallSpeed;
+			gameOn = false;
+			GameController.instance.LoseLife();
+			Debug.Log("BS Morte: " + ballSpeed);
 		}
 	}
 }

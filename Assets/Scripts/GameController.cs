@@ -12,9 +12,13 @@ public class GameController : MonoBehaviour {
     public float maxWidth;
     public float maxHeigth;
     public bool gameOver;
-    public GameObject gameOverText;
-    private int score = 0;
-    public Text scoreText;    
+    public GameObject gameLooseText;
+    public GameObject gameWinText;
+    private int score;
+    public Text scoreText;
+    private int lives;
+    public Text livesText;
+    public float initBallSpeed;
 
 	// Awake is called when the script instance is being loaded.
 	void Awake()
@@ -37,22 +41,44 @@ public class GameController : MonoBehaviour {
         targeCamtWidth = GameController.instance.cam.ScreenToWorldPoint(upperCorner);
         maxWidth = targeCamtWidth.x;
         maxHeigth = targeCamtWidth.y;
+        lives = 3;
 	}
-	
+
 	// Update is called once per frame
-	void Update () 
+	void Update ()
 	{
 		//Restart the Game
-		if (gameOver && Input.GetKeyDown("space")) 
+		if (gameOver && Input.GetKeyDown("space"))
 		{
 			//Make unity reload the scene currenctly active
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}
 	}
-    public void Endgame() 
+
+    public void LoseLife()
+    {
+        lives -= 1;
+        if (lives >= 0)
+        {
+            livesText.text = "Lives: " + lives.ToString();
+        }
+        else
+        {
+            Endgame("loose");
+        }
+    }
+
+    public void Endgame(string endCondition)
 	{
         gameOver = true;
-        gameOverText.SetActive(true);
+        if (endCondition == "win")
+        {
+            gameWinText.SetActive(true);
+        }
+        else
+        {
+            gameLooseText.SetActive(true);
+        }
     }
 
     public void Scored()
@@ -60,8 +86,16 @@ public class GameController : MonoBehaviour {
 		if (!gameOver) {
             score++;
 			scoreText.text = "Score: " + score.ToString();
+            if (score >= 5)
+            {
+                Endgame("win");
+            }
 		} else {
 			return;
 		}
+    }
+    public int GetScore()
+    {
+        return score;
     }
 }

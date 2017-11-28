@@ -1,2 +1,2 @@
-# breakout-like
-Let's create a breakout like game
+# breakout-clone
+My shot at creating a breakout-style game.
