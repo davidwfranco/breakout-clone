@@ -9,6 +9,7 @@ TagManager:
   - Background
   - Floor
   - Blocks
+  - PowerUp
   layers:
   - Default
   - TransparentFX

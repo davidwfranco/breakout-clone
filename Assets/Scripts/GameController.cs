@@ -55,6 +55,20 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
+    public void Scored()
+    {
+		if (!gameOver) {
+            score++;
+			scoreText.text = "Score: " + score.ToString();
+            if (score >= 5)
+            {
+                Endgame("win");
+            }
+		} else {
+			return;
+		}
+    }
+
     public void LoseLife()
     {
         lives -= 1;
@@ -81,19 +95,6 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    public void Scored()
-    {
-		if (!gameOver) {
-            score++;
-			scoreText.text = "Score: " + score.ToString();
-            if (score >= 5)
-            {
-                Endgame("win");
-            }
-		} else {
-			return;
-		}
-    }
     public int GetScore()
     {
         return score;

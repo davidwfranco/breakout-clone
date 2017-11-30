@@ -7,6 +7,7 @@ public class BallController : MonoBehaviour {
 	private float ballSpeed;
 	public GameObject player;
 	private bool gameOn = false;
+	private Vector2 oldVelocity;
 
 	// Use this for initialization
 	void Start () {
@@ -43,6 +44,8 @@ public class BallController : MonoBehaviour {
 		{
 			rdb2d.velocity = Vector2.zero;
 		}
+
+		oldVelocity = rdb2d.velocity;
 	}
 
  	// Create a function that receives the ball position, the player position and the player width
@@ -54,8 +57,12 @@ public class BallController : MonoBehaviour {
 
 	// Sent when an incoming collider makes contact with this object's
 	// collider (2D physics only).
-	void OnCollisionExit2D(Collision2D other)
+	void OnCollisionEnter2D(Collision2D other)
 	{
+
+		ContactPoint2D contact = other.contacts[0];
+		Vector2 reflectedVelocity = Vector2.Reflect(oldVelocity, contact.normal);
+
 		// If the ball collides with the player it bounces the ball upwards in a different horizontal position
 		// depending on how faz it hits from the half point
 		if (other.collider.CompareTag("Player"))
@@ -64,25 +71,9 @@ public class BallController : MonoBehaviour {
 			Vector2 newDirection = new Vector2(resBallCollision,1).normalized;
 			rdb2d.velocity = newDirection * ballSpeed;
 		}
-		// If it hits a block, add score and speed up the ball
-		else if (other.collider.CompareTag("Blocks"))
+		else if (other.collider.CompareTag("Boundaries"))
 		{
-			GameController.instance.Scored();
-			
-			if (GameController.instance.GetScore() % 2 == 0)
-			{
-				Debug.Log("BS Antes: " + ballSpeed);
-				ballSpeed += 1;
-				Debug.Log("BS Depois: " + ballSpeed);
-				if (rdb2d.velocity.y > 0)
-				{
-					rdb2d.velocity = new Vector2(rdb2d.velocity.x, ballSpeed);	
-				}
-				else 
-				{
-					rdb2d.velocity = new Vector2(rdb2d.velocity.x, -ballSpeed);	
-				}
-			}
+			rdb2d.velocity = reflectedVelocity;
 		}
 	}
 
@@ -97,7 +88,27 @@ public class BallController : MonoBehaviour {
 			ballSpeed = GameController.instance.initBallSpeed;
 			gameOn = false;
 			GameController.instance.LoseLife();
-			Debug.Log("BS Morte: " + ballSpeed);
+		}
+				// If it hits a block, add score and speed up the ball
+		else if (other.GetComponent<Collider2D>().CompareTag("Blocks"))
+		{
+			GameController.instance.Scored();
+			
+			if (GameController.instance.GetScore() > 0 && GameController.instance.GetScore() % 2 == 0)
+			{
+				ballSpeed += 1;
+			}
+			
+			if (rdb2d.velocity.y > 0)
+			{
+				rdb2d.velocity = Vector2.zero;
+				rdb2d.velocity = new Vector2(oldVelocity.x, -ballSpeed);	
+			}
+			else 
+			{
+				rdb2d.velocity = Vector2.zero;
+				rdb2d.velocity = new Vector2(oldVelocity.x, ballSpeed);	
+			}
 		}
 	}
 }

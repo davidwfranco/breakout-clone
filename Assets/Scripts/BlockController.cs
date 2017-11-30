@@ -14,13 +14,13 @@ public class BlockController : MonoBehaviour {
 		
 	}
 
-	// Sent when an incoming collider makes contact with this object's
-	// collider (2D physics only).
-	void OnCollisionExit2D(Collision2D other)
+	// Sent when another object leaves a trigger collider attached to
+	// this object (2D physics only).
+	void OnTriggerExit2D(Collider2D other)
 	{
-		if (other.collider.CompareTag("Ball"))
+		if (other.GetComponent<Collider2D>().CompareTag("Ball"))
 		{
 			Destroy(gameObject);
-		}
+		}	
 	}
 }
