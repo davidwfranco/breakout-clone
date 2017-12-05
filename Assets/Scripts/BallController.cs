@@ -8,6 +8,7 @@ public class BallController : MonoBehaviour {
 	public GameObject player;
 	private bool gameOn = false;
 	private Vector2 oldVelocity;
+	public GameObject[] powerUps;
 
 	// Use this for initialization
 	void Start () {
@@ -108,6 +109,22 @@ public class BallController : MonoBehaviour {
 			{
 				rdb2d.velocity = Vector2.zero;
 				rdb2d.velocity = new Vector2(oldVelocity.x, ballSpeed);	
+			}
+		}
+	}
+	
+	// Sent when another object leaves a trigger collider attached to
+	// this object (2D physics only).
+	void OnTriggerExit2D(Collider2D other)
+	{
+		if (other.GetComponent<Collider2D>().CompareTag("Blocks"))
+		{
+			Destroy(other.gameObject);
+			float powerUpChance = GameController.instance.poweUpChancePerc/100f;
+			float chance = Random.Range(0f, 1f);
+			if ( chance <= powerUpChance)
+			{
+			Instantiate(powerUps[Random.Range(0,powerUps.Length)], other.transform.position, Quaternion.identity);
 			}
 		}
 	}

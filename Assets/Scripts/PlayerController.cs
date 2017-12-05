@@ -21,7 +21,6 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per physics timestamp
 	void FixedUpdate () {
 		if (!gControl.gameOver) {
-			//keyboard control v2
 			moveHDir = Input.GetAxisRaw("Horizontal");
 			rdb2d.velocity = new Vector2((moveSpeed * moveHDir), 0);
 
@@ -38,14 +37,19 @@ public class PlayerController : MonoBehaviour {
 			// {
 			// 	rdb2d.velocity = Vector2.zero;
 			// }
-
 			//mouse pointer control
 			// rawPosition = gControl.cam.ScreenToWorldPoint (Input.mousePosition);
 			// targetPotision = new Vector2 (rawPosition.x, rdb2d.position.y);
 
-			// rdb2d.MovePosition (targetPotision);
 		} else {
 			rdb2d.MovePosition (new Vector2 (0.0f, rdb2d.position.y));
 		}
+	}
+
+	/// Sent when another object leaves a trigger collider attached to
+	/// this object (2D physics only).
+	void OnTriggerExit2D(Collider2D other)
+	{
+		this.
 	}
 }

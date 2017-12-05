@@ -19,6 +19,8 @@ public class GameController : MonoBehaviour {
     private int lives;
     public Text livesText;
     public float initBallSpeed;
+    public int poweUpChancePerc;
+    public int powerUpSpeed;
 
 	// Awake is called when the script instance is being loaded.
 	void Awake()

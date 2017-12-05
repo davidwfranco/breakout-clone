@@ -13,14 +13,4 @@ public class BlockController : MonoBehaviour {
 	void Update () {
 		
 	}
-
-	// Sent when another object leaves a trigger collider attached to
-	// this object (2D physics only).
-	void OnTriggerExit2D(Collider2D other)
-	{
-		if (other.GetComponent<Collider2D>().CompareTag("Ball"))
-		{
-			Destroy(gameObject);
-		}	
-	}
 }
