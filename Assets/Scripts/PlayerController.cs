@@ -45,11 +45,4 @@ public class PlayerController : MonoBehaviour {
 			rdb2d.MovePosition (new Vector2 (0.0f, rdb2d.position.y));
 		}
 	}
-
-	/// Sent when another object leaves a trigger collider attached to
-	/// this object (2D physics only).
-	void OnTriggerExit2D(Collider2D other)
-	{
-		this.
-	}
 }

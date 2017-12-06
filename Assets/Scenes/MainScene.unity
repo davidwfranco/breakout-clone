@@ -1925,6 +1925,7 @@ MonoBehaviour:
   livesText: {fileID: 340660211}
   initBallSpeed: 3
   poweUpChancePerc: 50
+  powerUpSpeed: 2
 --- !u!1 &1135454136
 GameObject:
   m_ObjectHideFlags: 0
