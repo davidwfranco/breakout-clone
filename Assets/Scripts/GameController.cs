@@ -49,6 +49,10 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
+        if (!gameOver && Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
 		//Restart the Game
 		if (gameOver && Input.GetKeyDown("space"))
 		{
@@ -62,7 +66,7 @@ public class GameController : MonoBehaviour {
 		if (!gameOver) {
             score++;
 			scoreText.text = "Score: " + score.ToString();
-            if (score >= 5)
+            if (score >= 55)
             {
                 Endgame("win");
             }

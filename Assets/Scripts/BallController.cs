@@ -8,12 +8,20 @@ public class BallController : MonoBehaviour {
 	public GameObject player;
 	private bool gameOn = false;
 	private Vector2 oldVelocity;
+	private Collider2D firstCollider;
+	private bool haveAlreadyCollided;
 	public GameObject[] powerUps;
+	private float powerUpChance;
+	private float chance;
+
 
 	// Use this for initialization
 	void Start () {
 		rdb2d = GetComponent<Rigidbody2D>();
 		ballSpeed = GameController.instance.initBallSpeed;
+		firstCollider = null;
+		haveAlreadyCollided = false;
+		powerUpChance = GameController.instance.poweUpChancePerc/100f;
 	}
 	
 	// Update is called once per frame
@@ -90,8 +98,37 @@ public class BallController : MonoBehaviour {
 			gameOn = false;
 			GameController.instance.LoseLife();
 		}
-				// If it hits a block, add score and speed up the ball
-		else if (other.GetComponent<Collider2D>().CompareTag("Blocks"))
+		// If it's not the floor than start the tratment to score, destroy the block and bounce the ball
+		else 
+		{
+			if (firstCollider == null)
+			{
+				firstCollider = other;
+				if (firstCollider.GetComponent<Collider2D>().CompareTag("Blocks"))
+				{
+					GameController.instance.Scored();
+					
+					if (GameController.instance.GetScore() > 0 && GameController.instance.GetScore() % 2 == 0)
+					{
+						ballSpeed += 1;
+					}
+					
+					if (rdb2d.velocity.y > 0)
+					{
+						rdb2d.velocity = Vector2.zero;
+						rdb2d.velocity = new Vector2(oldVelocity.x, -ballSpeed);	
+					}
+					else 
+					{
+						rdb2d.velocity = Vector2.zero;
+						rdb2d.velocity = new Vector2(oldVelocity.x, ballSpeed);	
+					}
+				}
+				haveAlreadyCollided = true;
+			}
+		}
+
+/* 		else if (other.GetComponent<Collider2D>().CompareTag("Blocks"))
 		{
 			GameController.instance.Scored();
 			
@@ -110,21 +147,27 @@ public class BallController : MonoBehaviour {
 				rdb2d.velocity = Vector2.zero;
 				rdb2d.velocity = new Vector2(oldVelocity.x, ballSpeed);	
 			}
-		}
+		} */
 	}
 	
 	// Sent when another object leaves a trigger collider attached to
 	// this object (2D physics only).
 	void OnTriggerExit2D(Collider2D other)
 	{
-		if (other.GetComponent<Collider2D>().CompareTag("Blocks"))
-		{
-			Destroy(other.gameObject);
-			float powerUpChance = GameController.instance.poweUpChancePerc/100f;
-			float chance = Random.Range(0f, 1f);
-			if ( chance <= powerUpChance)
+		haveAlreadyCollided = false;
+
+		if (!haveAlreadyCollided){
+			firstCollider = null;
+		
+			if (other.GetComponent<Collider2D>().CompareTag("Blocks"))
 			{
-			Instantiate(powerUps[Random.Range(0,powerUps.Length)], other.transform.position, Quaternion.identity);
+				Vector2 powerUpPos = other.transform.position;
+				Destroy(other.gameObject);
+				chance = Random.Range(0f, 1f);
+				if ( chance <= powerUpChance)
+				{
+					Instantiate(powerUps[Random.Range(0,powerUps.Length)], powerUpPos, Quaternion.identity);
+				}
 			}
 		}
 	}

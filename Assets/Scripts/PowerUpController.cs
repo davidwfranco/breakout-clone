@@ -18,4 +18,24 @@ public class PowerUpController : MonoBehaviour {
 	void Update () {
 		
 	}
+
+	void OnTriggerEnter2D(Collider2D other) 
+	{
+		if (other.GetComponent<Collider2D>().CompareTag("Player"))
+		{
+			Destroy(gameObject);	
+		}
+	}
+	
+	void OnTriggerExit2D(Collider2D other) 
+	{
+		if (other.GetComponent<Collider2D>().CompareTag("Floor"))
+		{
+			Destroy(gameObject);
+		}
+		else if (other.GetComponent<Collider2D>().CompareTag("Player"))
+		{
+			Destroy(gameObject);	
+		}
+	}
 }
