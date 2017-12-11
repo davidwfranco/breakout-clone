@@ -10,6 +10,9 @@ TagManager:
   - Floor
   - Blocks
   - PowerUp
+  - PU_Grow
+  - PU_Magnet
+  - PD_Shorten
   layers:
   - Default
   - TransparentFX

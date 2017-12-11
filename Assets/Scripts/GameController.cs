@@ -53,7 +53,8 @@ public class GameController : MonoBehaviour {
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
-		//Restart the Game
+	
+    	//Restart the Game
 		if (gameOver && Input.GetKeyDown("space"))
 		{
 			//Make unity reload the scene currenctly active

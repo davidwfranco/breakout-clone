@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114373822844184658}
   m_Layer: 0
   m_Name: Pu_1
-  m_TagString: Untagged
+  m_TagString: PU_Grow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

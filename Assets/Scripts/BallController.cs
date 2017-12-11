@@ -21,7 +21,6 @@ public class BallController : MonoBehaviour {
 		ballSpeed = GameController.instance.initBallSpeed;
 		firstCollider = null;
 		haveAlreadyCollided = false;
-		powerUpChance = GameController.instance.poweUpChancePerc/100f;
 	}
 	
 	// Update is called once per frame
@@ -159,16 +158,6 @@ public class BallController : MonoBehaviour {
 		if (!haveAlreadyCollided){
 			firstCollider = null;
 		
-			if (other.GetComponent<Collider2D>().CompareTag("Blocks"))
-			{
-				Vector2 powerUpPos = other.transform.position;
-				Destroy(other.gameObject);
-				chance = Random.Range(0f, 1f);
-				if ( chance <= powerUpChance)
-				{
-					Instantiate(powerUps[Random.Range(0,powerUps.Length)], powerUpPos, Quaternion.identity);
-				}
-			}
 		}
 	}
 }

@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114706970110160258}
   m_Layer: 0
   m_Name: Pu_0
-  m_TagString: Untagged
+  m_TagString: PU_Magnet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

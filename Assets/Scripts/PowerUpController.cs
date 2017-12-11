@@ -23,7 +23,12 @@ public class PowerUpController : MonoBehaviour {
 	{
 		if (other.GetComponent<Collider2D>().CompareTag("Player"))
 		{
-			Destroy(gameObject);	
+			Destroy(gameObject);
+			if (rdb2d.CompareTag("PU_Grow"))	
+			{
+				float newXSize = other.transform.localScale.x + (other.transform.localScale.x * 0.1f);
+				other.transform.localScale = new Vector2(newXSize, other.transform.localScale.y);
+			}
 		}
 	}
 	

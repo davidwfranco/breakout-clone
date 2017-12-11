@@ -24,19 +24,6 @@ public class PlayerController : MonoBehaviour {
 			moveHDir = Input.GetAxisRaw("Horizontal");
 			rdb2d.velocity = new Vector2((moveSpeed * moveHDir), 0);
 
-			//keyboard control
-			// if (Input.GetKey("left")) 
-			// {
-			// 	rdb2d.velocity = new Vector2(-5, 0);
-			// }
-			// else if (Input.GetKey("right")) 
-			// {
-			// 	rdb2d.velocity = new Vector2(5, 0);				
-			// }
-			// else 
-			// {
-			// 	rdb2d.velocity = Vector2.zero;
-			// }
 			//mouse pointer control
 			// rawPosition = gControl.cam.ScreenToWorldPoint (Input.mousePosition);
 			// targetPotision = new Vector2 (rawPosition.x, rdb2d.position.y);
