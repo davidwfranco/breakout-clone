@@ -2302,7 +2302,7 @@ MonoBehaviour:
   scoreText: {fileID: 1525101852}
   livesText: {fileID: 340660211}
   initBallSpeed: 3
-  poweUpChancePerc: 50
+  poweUpChancePerc: 23
   powerUpSpeed: 2
 --- !u!114 &986604285
 MonoBehaviour:
@@ -4213,6 +4213,8 @@ MonoBehaviour:
   - {fileID: 1849164270083380, guid: f8791ccc5d62444e396a880c17185c80, type: 2}
   - {fileID: 1349368861489986, guid: 33eb64611d7ea44f6a9a5f27cf10836c, type: 2}
   - {fileID: 1474849084365400, guid: eb45dd5b4d3dc4483ae7581b6180a47b, type: 2}
+  powerUpChance: 0
+  chance: 0
 --- !u!4 &1933736294
 Transform:
   m_ObjectHideFlags: 0
