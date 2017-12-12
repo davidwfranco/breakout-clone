@@ -4,19 +4,17 @@ using UnityEngine;
 
 public class BaseBlockController : MonoBehaviour {
 
-	private Rigidbody2D rdb2d;
 	private float chance;
-	private float powerUpChance;
+	public float powerUpChance;
 	public GameObject[] powerUps;
 	private int hits = 0;
-	protected int blockLife;
+	public int blockLife;
 
 
 	// Use this for initialization
 	void Start () {
-		rdb2d = GetComponent<Rigidbody2D>();
 		powerUpChance = GameController.instance.poweUpChancePerc/100f;
-		blockLife = 1;
+		blockLife = 1;   
 	}
 	
 	// Update is called once per frame
@@ -41,6 +39,7 @@ public class BaseBlockController : MonoBehaviour {
 			Vector2 powerUpPos = ball.transform.position;
 			Destroy(gameObject);
 			chance = Random.Range(0f, 1f);
+			Debug.Log("chance: " + chance + "puchance: " + powerUpChance);
 			if ( chance <= powerUpChance)
 			{
 				Instantiate(powerUps[Random.Range(0,powerUps.Length)], powerUpPos, Quaternion.identity);

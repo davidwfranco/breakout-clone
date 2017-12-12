@@ -43,7 +43,7 @@ public class BallController : MonoBehaviour {
 				rdb2d.transform.position = new Vector2 (player.transform.position.x, (player.transform.position.y + 0.4f));
 				if (Input.GetKeyDown(KeyCode.Space))
 				{
-					rdb2d.velocity = new Vector2(Random.Range(-3,3), ballSpeed);
+					rdb2d.velocity = new Vector2(/*Random.Range(-3,3)*/0, ballSpeed);
 					gameOn = true;
 				}
 			}
@@ -155,7 +155,6 @@ public class BallController : MonoBehaviour {
 
 		if (!haveAlreadyCollided){
 			firstCollider = null;
-		
 		}
 	}
 }
