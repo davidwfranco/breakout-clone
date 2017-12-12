@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockController : MonoBehaviour {
+public class BaseBlockController : MonoBehaviour {
 
 	private Rigidbody2D rdb2d;
 	private float chance;
 	private float powerUpChance;
 	public GameObject[] powerUps;
+	private int hits = 0;
+	protected int blockLife;
 
 
 	// Use this for initialization
 	void Start () {
 		rdb2d = GetComponent<Rigidbody2D>();
 		powerUpChance = GameController.instance.poweUpChancePerc/100f;
+		blockLife = 1;
 	}
 	
 	// Update is called once per frame
@@ -25,7 +28,17 @@ public class BlockController : MonoBehaviour {
 	{
 		if (other.GetComponent<Collider2D>().CompareTag("Ball"))
 		{
-			Vector2 powerUpPos = other.transform.position;
+			BallHit(other);			
+		}
+	}
+
+	public void BallHit(Collider2D ball)
+	{
+		hits ++;
+		if (hits >= blockLife)
+		{
+			GameController.instance.Scored();
+			Vector2 powerUpPos = ball.transform.position;
 			Destroy(gameObject);
 			chance = Random.Range(0f, 1f);
 			if ( chance <= powerUpChance)
@@ -33,5 +46,6 @@ public class BlockController : MonoBehaviour {
 				Instantiate(powerUps[Random.Range(0,powerUps.Length)], powerUpPos, Quaternion.identity);
 			}
 		}
+
 	}
 }

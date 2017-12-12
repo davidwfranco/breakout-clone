@@ -105,8 +105,6 @@ public class BallController : MonoBehaviour {
 				firstCollider = other;
 				if (firstCollider.GetComponent<Collider2D>().CompareTag("Blocks"))
 				{
-					GameController.instance.Scored();
-					
 					if (GameController.instance.GetScore() > 0 && GameController.instance.GetScore() % 2 == 0)
 					{
 						ballSpeed += 1;
