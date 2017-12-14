@@ -21,6 +21,8 @@ public class GameController : MonoBehaviour {
     public float initBallSpeed;
     public float poweUpChancePerc;
     public int powerUpSpeed;
+    private LevelMaker lMaker;
+    public GameObject block;
 
 	// Awake is called when the script instance is being loaded.
 	void Awake()
@@ -38,12 +40,23 @@ public class GameController : MonoBehaviour {
         {
             cam = Camera.main;
         }
-
+        
+        lMaker = new LevelMaker();
         upperCorner = new Vector2(Screen.width, Screen.height);
         targeCamtWidth = GameController.instance.cam.ScreenToWorldPoint(upperCorner);
         maxWidth = targeCamtWidth.x;
         maxHeigth = targeCamtWidth.y;
         lives = 3;
+
+        for (int arrayLin = 0; arrayLin < lMaker.blockTypeArray.GetLength(0); arrayLin++)
+        {
+            for(int arrayCol = 0; arrayCol < lMaker.blockTypeArray.GetLength(1); arrayCol++){
+                if (lMaker.blockTypeArray[arrayLin,arrayCol] == 1)
+                {
+                    Instantiate(block, new Vector2((float)lMaker.blockPosArray[arrayLin, arrayCol, 0], (float)lMaker.blockPosArray[arrayLin, arrayCol, 1]), Quaternion.identity);
+                }
+            }
+        }
 	}
 
 	// Update is called once per frame
