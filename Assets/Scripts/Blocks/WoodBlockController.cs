@@ -2,6 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MetalBlockController : BaseBlockController {
+public class WoodBlockController : BaseBlockController {
 
 }

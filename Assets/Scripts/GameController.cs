@@ -22,7 +22,7 @@ public class GameController : MonoBehaviour {
     public float poweUpChancePerc;
     public int powerUpSpeed;
     private LevelMaker lMaker;
-    public GameObject block;
+    public GameObject[] block;
 
 	// Awake is called when the script instance is being loaded.
 	void Awake()
@@ -51,9 +51,25 @@ public class GameController : MonoBehaviour {
         for (int arrayLin = 0; arrayLin < lMaker.blockTypeArray.GetLength(0); arrayLin++)
         {
             for(int arrayCol = 0; arrayCol < lMaker.blockTypeArray.GetLength(1); arrayCol++){
+                
+                switch (lMaker.blockTypeArray[arrayLin, arrayCol])
+                {
+                    case 1:
+                        Instantiate(block[0], new Vector2((float)lMaker.blockPosArray[arrayLin, arrayCol, 0], (float)lMaker.blockPosArray[arrayLin, arrayCol, 1]), Quaternion.identity);
+                        break;
+                    case 2:
+                        Instantiate(block[1], new Vector2((float)lMaker.blockPosArray[arrayLin, arrayCol, 0], (float)lMaker.blockPosArray[arrayLin, arrayCol, 1]), Quaternion.identity);        
+                        break;
+                    case 3:
+                        Instantiate(block[2], new Vector2((float)lMaker.blockPosArray[arrayLin, arrayCol, 0], (float)lMaker.blockPosArray[arrayLin, arrayCol, 1]), Quaternion.identity);        
+                        break;
+                    default:
+                        break;
+                }
+                
                 if (lMaker.blockTypeArray[arrayLin,arrayCol] == 1)
                 {
-                    Instantiate(block, new Vector2((float)lMaker.blockPosArray[arrayLin, arrayCol, 0], (float)lMaker.blockPosArray[arrayLin, arrayCol, 1]), Quaternion.identity);
+                    Instantiate(block[0], new Vector2((float)lMaker.blockPosArray[arrayLin, arrayCol, 0], (float)lMaker.blockPosArray[arrayLin, arrayCol, 1]), Quaternion.identity);
                 }
             }
         }

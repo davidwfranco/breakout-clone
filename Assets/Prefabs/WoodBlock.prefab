@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4848801997336672}
   - component: {fileID: 212668336828638794}
   - component: {fileID: 61145086933457320}
-  - component: {fileID: 114498764686804452}
+  - component: {fileID: 114286078046679606}
   m_Layer: 0
-  m_Name: NormalBlock
+  m_Name: WoodBlock
   m_TagString: Blocks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +67,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &114498764686804452
+--- !u!114 &114286078046679606
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -75,7 +75,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1846027465766138}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad737542d7f66483599243b7c8703a24, type: 3}
+  m_Script: {fileID: 11500000, guid: 36fa02591ee204067b9c396f5ce24fa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   powerUpChance: 0
@@ -83,7 +83,7 @@ MonoBehaviour:
   - {fileID: 1849164270083380, guid: f8791ccc5d62444e396a880c17185c80, type: 2}
   - {fileID: 1349368861489986, guid: 33eb64611d7ea44f6a9a5f27cf10836c, type: 2}
   - {fileID: 1474849084365400, guid: eb45dd5b4d3dc4483ae7581b6180a47b, type: 2}
-  blockLife: 1
+  blockLife: 2
 --- !u!212 &212668336828638794
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -119,7 +119,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4852b33733e6b4a7fb25df16d0dbbb9f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.428, g: 0.472, b: 0.035142723, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
