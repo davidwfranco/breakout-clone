@@ -13,7 +13,6 @@ public class BaseBlockController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		powerUpChance = GameController.instance.poweUpChancePerc/100f;   
 	}
 	
 	// Update is called once per frame
