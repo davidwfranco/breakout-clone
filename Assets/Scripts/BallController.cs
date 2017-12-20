@@ -7,6 +7,7 @@ public class BallController : MonoBehaviour {
 	private float ballSpeed;
 	public GameObject player;
 	private bool gameOn = false;
+	public bool isPlayerSticky = false;
 	private Vector2 oldVelocity;
 	private Collider2D firstCollider;
 	private bool haveAlreadyCollided;
@@ -40,7 +41,7 @@ public class BallController : MonoBehaviour {
 			//Stuck the ball to the player ate the begining of the game
 			if (!gameOn)
 			{
-				rdb2d.transform.position = new Vector2 (player.transform.position.x, (player.transform.position.y + 0.5f));
+				rdb2d.transform.position = new Vector2 (player.transform.position.x, (player.transform.position.y + 0.3f));
 				if (Input.GetKeyDown(KeyCode.Space))
 				{
 					rdb2d.velocity = new Vector2(/*Random.Range(-3,3)*/0, ballSpeed);
@@ -75,9 +76,16 @@ public class BallController : MonoBehaviour {
 		// depending on how faz it hits from the half point
 		if (other.collider.CompareTag("Player"))
 		{
-			float resBallCollision = ballCollision(transform.position, other.transform.position, ((CapsuleCollider2D)other.collider).size.x);
-			Vector2 newDirection = new Vector2(resBallCollision,1).normalized;
-			rdb2d.velocity = newDirection * ballSpeed;
+			if (isPlayerSticky)
+			{
+				gameOn = false;
+			}
+			else 
+			{
+				float resBallCollision = ballCollision(transform.position, other.transform.position, ((CapsuleCollider2D)other.collider).size.x);
+				Vector2 newDirection = new Vector2(resBallCollision,1).normalized;
+				rdb2d.velocity = newDirection * ballSpeed;
+			}
 		}
 		else if (other.collider.CompareTag("Boundaries"))
 		{

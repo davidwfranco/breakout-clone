@@ -1038,7 +1038,7 @@ MonoBehaviour:
   livesText: {fileID: 340660211}
   initBallSpeed: 3
   poweUpChancePerc: 100
-  powerUpSpeed: 2
+  powerUpFallSpeed: 3
   block:
   - {fileID: 1846027465766138, guid: 3d8a82eca5d2c452a854998d299a3797, type: 2}
   - {fileID: 1846027465766138, guid: 77888fe54d5c14c9db57eea7a5a377e5, type: 2}
@@ -1141,7 +1141,7 @@ GameObject:
   - component: {fileID: 1307104712}
   - component: {fileID: 1307104711}
   m_Layer: 0
-  m_Name: NormalBlock
+  m_Name: Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1597,7 +1597,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &2106198297
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1702,6 +1702,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 674372189}
+  isPlayerSticky: 0
   powerUps:
   - {fileID: 1849164270083380, guid: f8791ccc5d62444e396a880c17185c80, type: 2}
   - {fileID: 1349368861489986, guid: 33eb64611d7ea44f6a9a5f27cf10836c, type: 2}

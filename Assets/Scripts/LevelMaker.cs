@@ -11,11 +11,19 @@ public class LevelMaker {
 	// public double[] blockSize;
 
 	public LevelMaker(){
-		blockTypeArray = new int[,] {
+		/* blockTypeArray = new int[,] {
 			{0, 3, 2, 1, 2, 1, 2, 3, 0},
 			{3, 2, 1, 1, 1, 1, 1, 2, 3},
 			{3, 2, 1, 1, 1, 1, 1, 2, 3},
 			{0, 3, 2, 1, 2, 1, 2, 3, 0}
+			}; */
+		
+		//TEST ARRAY - ALL ONES
+		blockTypeArray = new int[,] {
+			{1, 1, 1, 1, 1, 1, 1, 1, 1},
+			{1, 1, 1, 1, 1, 1, 1, 1, 1},
+			{1, 1, 1, 1, 1, 1, 1, 1, 1},
+			{1, 1, 1, 1, 1, 1, 1, 1, 1}
 			};
 
 		blockPosArray = new double[,,] {
