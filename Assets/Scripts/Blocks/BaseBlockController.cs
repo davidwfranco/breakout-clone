@@ -38,7 +38,6 @@ public class BaseBlockController : MonoBehaviour {
 			Vector2 powerUpPos = ball.transform.position;
 			Destroy(gameObject);
 			chance = Random.Range(0f, 1f);
-			Debug.Log("chance: " + chance + "puchance: " + powerUpChance);
 			if ( chance <= powerUpChance)
 			{
 				Instantiate(powerUps[Random.Range(0,powerUps.Length)], powerUpPos, Quaternion.identity);
