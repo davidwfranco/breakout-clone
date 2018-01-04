@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour {
 	public Camera cam;
     public Vector2 upperCorner;
     public Vector2 targeCamtWidth;
-    private float maxWidth;
+    public float maxWidth;
     public float maxHeigth;
     public bool gameOver;
     public GameObject gameLooseText;
@@ -23,8 +23,6 @@ public class GameController : MonoBehaviour {
     public int powerUpFallSpeed;
     private LevelMaker lMaker;
     public GameObject[] block;
-    public GameObject ball;
-    public GameObject player;
 
 	// Awake is called when the script instance is being loaded.
 	void Awake()
@@ -69,10 +67,6 @@ public class GameController : MonoBehaviour {
                 }
             }
         }
-
-        player = GameObject.FindGameObjectsWithTag("Player")[0];
-
-        Instantiate(ball, new Vector2 (player.transform.position.x, (player.transform.position.y + 0.3f)), Quaternion.identity);
 	}
 
 	// Update is called once per frame

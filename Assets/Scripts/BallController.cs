@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour {
 	private Rigidbody2D rdb2d;
-	public float ballSpeed;
+	private float ballSpeed;
 	public GameObject player;
 	private bool gameOn = false;
 	public bool isPlayerSticky = false;
@@ -21,7 +21,6 @@ public class BallController : MonoBehaviour {
 		ballSpeed = GameController.instance.initBallSpeed;
 		firstCollider = null;
 		haveAlreadyCollided = false;
-		player = GameObject.FindGameObjectsWithTag("Player")[0];
 	}
 	
 	// Update is called once per frame
@@ -79,11 +78,10 @@ public class BallController : MonoBehaviour {
 			if (isPlayerSticky)
 			{
 				gameOn = false;
-				isPlayerSticky = false;
 			}
 			else 
 			{
-				float resBallCollision = ballCollision(transform.position, player.transform.position, (player.GetComponent<CapsuleCollider2D>().size.x));
+				float resBallCollision = ballCollision(transform.position, other.transform.position, ((CapsuleCollider2D)other.collider).size.x);
 				Vector2 newDirection = new Vector2(resBallCollision,1).normalized;
 				rdb2d.velocity = newDirection * ballSpeed;
 			}
@@ -165,5 +163,13 @@ public class BallController : MonoBehaviour {
 		if (!haveAlreadyCollided){
 			firstCollider = null;
 		}
+	}
+
+	public void SlowDown(int ballSpeedDownPerc)
+	{
+		Debug.Log("BallSpeed -> " + ballSpeed);
+		Debug.Log("SpeedDownRaw -> " + ballSpeedDownPerc + " / PercCalc -> " + (ballSpeedDownPerc/100));
+		ballSpeed *= (ballSpeedDownPerc/100f);
+		Debug.Log("BallSpeed After -> " + ballSpeed);
 	}
 }
