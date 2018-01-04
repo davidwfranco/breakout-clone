@@ -90,7 +90,7 @@ public class GameController : MonoBehaviour {
 		if (!gameOver) {
             score++;
 			scoreText.text = "Score: " + score.ToString();
-            if (score >= 55)
+            if (GameObject.FindGameObjectsWithTag("Blocks").Length == 0)
             {
                 Endgame("win");
             }

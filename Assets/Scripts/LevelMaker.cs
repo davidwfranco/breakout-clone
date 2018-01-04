@@ -3,6 +3,9 @@
 public class LevelMaker {
 
 	public int[,] blockTypeArray;
+	public int[,] fastGame;
+	public int[,] allNormal;
+	public int[,] miscBlocks;
 	public double[,,] blockPosArray;
 
 	// public double initPosX;
@@ -11,20 +14,28 @@ public class LevelMaker {
 	// public double[] blockSize;
 
 	public LevelMaker(){
-		/* blockTypeArray = new int[,] {
+		miscBlocks = new int[,] {
 			{0, 3, 2, 1, 2, 1, 2, 3, 0},
 			{3, 2, 1, 1, 1, 1, 1, 2, 3},
 			{3, 2, 1, 1, 1, 1, 1, 2, 3},
 			{0, 3, 2, 1, 2, 1, 2, 3, 0}
-			}; */
+			};
 		
-		//TEST ARRAY - ALL ONES
-		blockTypeArray = new int[,] {
+		allNormal = new int[,] {
 			{1, 1, 1, 1, 1, 1, 1, 1, 1},
 			{1, 1, 1, 1, 1, 1, 1, 1, 1},
 			{1, 1, 1, 1, 1, 1, 1, 1, 1},
 			{1, 1, 1, 1, 1, 1, 1, 1, 1}
 			};
+
+		fastGame = new int[,] {
+			{0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 1, 1, 1, 1, 1, 0, 0}
+			};
+
+		blockTypeArray = fastGame;
 
 		blockPosArray = new double[,,] {
 			{{-2.4, 1.8}, {-1.8, 1.8}, {-1.2, 1.8}, {-0.6, 1.8}, {0.0, 1.8}, {0.6, 1.8}, {1.2, 1.8}, {1.8, 1.8}, {2.4, 1.8}},

@@ -78,11 +78,14 @@ public class BallController : MonoBehaviour {
 			if (isPlayerSticky)
 			{
 				gameOn = false;
+				isPlayerSticky = false;
 			}
 			else 
 			{
 				float resBallCollision = ballCollision(transform.position, other.transform.position, ((CapsuleCollider2D)other.collider).size.x);
+				
 				Vector2 newDirection = new Vector2(resBallCollision,1).normalized;
+				
 				rdb2d.velocity = newDirection * ballSpeed;
 			}
 		}
@@ -112,9 +115,9 @@ public class BallController : MonoBehaviour {
 				firstCollider = other;
 				if (firstCollider.GetComponent<Collider2D>().CompareTag("Blocks"))
 				{
-					if (GameController.instance.GetScore() > 0 && GameController.instance.GetScore() % 2 == 0)
+					if (GameController.instance.GetScore() > 0 && GameController.instance.GetScore() % 3 == 0)
 					{
-						ballSpeed += 1;
+						Accelerate(20);
 					}
 					
 					if (rdb2d.velocity.y > 0)
@@ -167,9 +170,11 @@ public class BallController : MonoBehaviour {
 
 	public void SlowDown(int ballSpeedDownPerc)
 	{
-		Debug.Log("BallSpeed -> " + ballSpeed);
-		Debug.Log("SpeedDownRaw -> " + ballSpeedDownPerc + " / PercCalc -> " + (ballSpeedDownPerc/100));
-		ballSpeed *= (ballSpeedDownPerc/100f);
-		Debug.Log("BallSpeed After -> " + ballSpeed);
+		ballSpeed *= (1 - (ballSpeedDownPerc/100f));
+	}
+	
+	public void Accelerate(int ballAccelPerc)
+	{
+		ballSpeed *= (1 + (ballAccelPerc/100f));
 	}
 }
