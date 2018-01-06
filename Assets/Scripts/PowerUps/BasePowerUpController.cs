@@ -8,7 +8,7 @@ public class BasePowerUpController : MonoBehaviour {
 	private int vSpeed;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		rdb2d = GetComponent<Rigidbody2D>();
 		vSpeed = GameController.instance.powerUpFallSpeed;
 		rdb2d.velocity = Vector2.down * vSpeed;
@@ -33,5 +33,10 @@ public class BasePowerUpController : MonoBehaviour {
 	protected virtual void ExecPowerUp(Collider2D other)
 	{
 
+	}
+
+	void CleanLevel()
+	{
+		Destroy(gameObject);
 	}
 }

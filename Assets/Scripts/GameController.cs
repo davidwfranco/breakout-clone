@@ -83,6 +83,12 @@ public class GameController : MonoBehaviour {
 			//Make unity reload the scene currenctly active
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}
+
+        //Endgame if all the blocks have been cleaned
+        if (GameObject.FindGameObjectsWithTag("Blocks").Length == 0)
+        {
+            Endgame("win");
+        }
 	}
 
     public void Scored()
@@ -90,10 +96,6 @@ public class GameController : MonoBehaviour {
 		if (!gameOver) {
             score++;
 			scoreText.text = "Score: " + score.ToString();
-            if (GameObject.FindGameObjectsWithTag("Blocks").Length == 0)
-            {
-                Endgame("win");
-            }
 		} else {
 			return;
 		}
@@ -115,6 +117,24 @@ public class GameController : MonoBehaviour {
     public void Endgame(string endCondition)
 	{
         gameOver = true;
+        
+        scoreText.gameObject.SetActive(false);
+        livesText.gameObject.SetActive(false);
+
+//        BroadcastMessage("CleanLevel");
+
+        string[] tags = new string[] {"PowerUp", "Ball", "Player"};
+
+        foreach (string tag in tags)
+        {
+            GameObject[] aliveObjects = GameObject.FindGameObjectsWithTag(tag);
+
+            foreach (GameObject obj in aliveObjects)
+            {
+                obj.SendMessage("CleanLevel");
+            }
+        }
+
         if (endCondition == "win")
         {
             gameWinText.SetActive(true);

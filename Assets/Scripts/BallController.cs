@@ -177,4 +177,9 @@ public class BallController : MonoBehaviour {
 	{
 		ballSpeed *= (1 + (ballAccelPerc/100f));
 	}
+
+	public void CleanLevel()
+	{
+		Destroy(gameObject);
+	}
 }

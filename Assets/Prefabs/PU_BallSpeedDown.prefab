@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114745781518050192}
   m_Layer: 0
   m_Name: PU_BallSpeedDown
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

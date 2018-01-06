@@ -32,4 +32,9 @@ public class PlayerController : MonoBehaviour {
 			rdb2d.MovePosition (new Vector2 (0.0f, rdb2d.position.y));
 		}
 	}
+
+	void CleanLevel()
+	{
+		Destroy(gameObject);
+	}	
 }

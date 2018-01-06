@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114390058573287524}
   m_Layer: 0
   m_Name: PU_GrowBar
-  m_TagString: PU_Magnet
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
