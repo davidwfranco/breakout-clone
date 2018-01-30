@@ -170,7 +170,13 @@ public class BallController : MonoBehaviour {
 
 	public void SlowDown(int ballSpeedDownPerc)
 	{
-		ballSpeed *= (1 - (ballSpeedDownPerc/100f));
+		if ((ballSpeed - (ballSpeed * (ballSpeedDownPerc/100f))) > 2.1f)
+		{
+			Debug.Log("Before ballS = " + ballSpeed);
+			ballSpeed *= (1 - (ballSpeedDownPerc/100f));	
+			Debug.Log("After ballS = " + ballSpeed);
+		}
+		
 	}
 	
 	public void Accelerate(int ballAccelPerc)

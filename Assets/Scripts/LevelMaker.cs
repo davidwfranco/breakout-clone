@@ -3,6 +3,7 @@
 public class LevelMaker {
 
 	public int[,] blockTypeArray;
+	public int[,] oneShot;
 	public int[,] fastGame;
 	public int[,] allNormal;
 	public int[,] miscBlocks;
@@ -32,9 +33,15 @@ public class LevelMaker {
 			{0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 1, 1, 1, 1, 1, 1, 1, 0}
+			};
+		
+		oneShot = new int[,] {
+			{0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, 1, 0, 0, 0, 0}
 			};
-
 		blockTypeArray = fastGame;
 
 		blockPosArray = new double[,,] {
