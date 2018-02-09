@@ -41,7 +41,7 @@ public class BallController : MonoBehaviour {
 			if (!gameOn)
 			{
 				rdb2d.transform.position = new Vector2 (player.transform.position.x, (player.transform.position.y + 0.3f));
-				if (Input.GetKeyDown(KeyCode.Space))
+				if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0) )
 				{
 					rdb2d.velocity = new Vector2(Random.Range(-3,3), ballSpeed);
 					gameOn = true;

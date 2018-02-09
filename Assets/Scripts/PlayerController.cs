@@ -21,12 +21,15 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per physics timestamp
 	void FixedUpdate () {
 		if (!gControl.gameOver) {
-			moveHDir = Input.GetAxisRaw("Horizontal");
-			rdb2d.velocity = new Vector2((moveSpeed * moveHDir), 0);
+			// Keyboard control
+			/* moveHDir = Input.GetAxisRaw("Horizontal");
+			rdb2d.velocity = new Vector2((moveSpeed * moveHDir), 0); */
 
-			//mouse pointer control
-			// rawPosition = gControl.cam.ScreenToWorldPoint (Input.mousePosition);
-			// targetPotision = new Vector2 (rawPosition.x, rdb2d.position.y);
+			// Mouse Controller
+			rawPosition = gControl.cam.ScreenToWorldPoint (Input.mousePosition);
+			targetPotision = new Vector2 (rawPosition.x, rdb2d.position.y);
+
+			rdb2d.MovePosition(targetPotision);
 
 		} else {
 			rdb2d.MovePosition (new Vector2 (0.0f, rdb2d.position.y));
