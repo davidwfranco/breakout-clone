@@ -34,6 +34,8 @@ public class GameController : MonoBehaviour {
         else if (instance != this)
         {
             Destroy(gameObject);
+
+            
         }
 
         if (cam == null)

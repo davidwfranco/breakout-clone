@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour {
 			rdb2d.velocity = new Vector2((moveSpeed * moveHDir), 0); */
 
 			// Mouse Controller
-			rawPosition = gControl.cam.ScreenToWorldPoint (Input.mousePosition);
+ 			rawPosition = gControl.cam.ScreenToWorldPoint (Input.mousePosition);
 			targetPotision = new Vector2 (rawPosition.x, rdb2d.position.y);
 
 			rdb2d.MovePosition(targetPotision);
