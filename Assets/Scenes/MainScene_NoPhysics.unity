@@ -152,7 +152,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -255,8 +255,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1835449491
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4852b33733e6b4a7fb25df16d0dbbb9f, type: 3}
   m_Color: {r: 0.47458908, g: 0.4871286, b: 0.83823526, a: 1}
@@ -482,7 +482,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -744,7 +744,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -868,8 +868,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1835449491
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4852b33733e6b4a7fb25df16d0dbbb9f, type: 3}
   m_Color: {r: 0.47434196, g: 0.48607615, b: 0.83927673, a: 1}
@@ -967,7 +967,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 807eaaee2d9484940a1e19c2414c4eb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
 --- !u!70 &674372194
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -977,7 +976,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1409,13 +1408,11 @@ MonoBehaviour:
   gameWinText: {fileID: 821075036}
   scoreText: {fileID: 1525101852}
   livesText: {fileID: 340660211}
-  initBallSpeed: 4
+  initBallSpeed: 0.3
+  initPlayerSpeed: 0.2
   poweUpChancePerc: 30
   powerUpFallSpeed: 3
-  block:
-  - {fileID: 1846027465766138, guid: 3d8a82eca5d2c452a854998d299a3797, type: 2}
-  - {fileID: 1846027465766138, guid: 77888fe54d5c14c9db57eea7a5a377e5, type: 2}
-  - {fileID: 1846027465766138, guid: 40a6defe0af034e1e9d4a2e7c975ec6c, type: 2}
+  block: []
 --- !u!1 &1240724758
 GameObject:
   m_ObjectHideFlags: 0
@@ -2082,8 +2079,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1835449491
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4852b33733e6b4a7fb25df16d0dbbb9f, type: 3}
   m_Color: {r: 1, g: 0.037931025, b: 0.037931025, a: 1}
@@ -2122,11 +2119,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1840953292}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3eee29f4bde42409f8b159d8292bee7a, type: 3}
+  m_Script: {fileID: 11500000, guid: 27ecac196bd71465aab9e7340afa11a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 674372189}
-  isPlayerSticky: 0
 --- !u!58 &1840953295
 CircleCollider2D:
   m_ObjectHideFlags: 0
