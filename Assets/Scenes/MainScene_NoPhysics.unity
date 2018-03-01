@@ -167,7 +167,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_EdgeRadius: 0.05
 --- !u!114 &8321174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -497,7 +497,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_EdgeRadius: 0.05
 --- !u!1 &312595038
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,7 +759,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_EdgeRadius: 0.05
 --- !u!1 &600448722
 GameObject:
   m_ObjectHideFlags: 0
@@ -892,6 +892,7 @@ GameObject:
   - component: {fileID: 674372190}
   - component: {fileID: 674372194}
   - component: {fileID: 674372192}
+  - component: {fileID: 674372193}
   m_Layer: 0
   m_Name: Bar
   m_TagString: Player
@@ -967,6 +968,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 807eaaee2d9484940a1e19c2414c4eb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!50 &674372193
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 674372189}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 1
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!70 &674372194
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1408,7 +1429,7 @@ MonoBehaviour:
   gameWinText: {fileID: 821075036}
   scoreText: {fileID: 1525101852}
   livesText: {fileID: 340660211}
-  initBallSpeed: 0.3
+  initBallSpeed: 0.03
   initPlayerSpeed: 0.2
   poweUpChancePerc: 30
   powerUpFallSpeed: 3
@@ -2017,7 +2038,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1699491700}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -4.89, z: 1}
+  m_LocalPosition: {x: 0, y: -4.89, z: 0}
   m_LocalScale: {x: 5.4978743, y: 0.20592795, z: 1}
   m_Children: []
   m_Father: {fileID: 600448724}
@@ -2101,6 +2122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1840953297}
   - component: {fileID: 1840953296}
+  - component: {fileID: 1840953294}
   - component: {fileID: 1840953295}
   - component: {fileID: 1840953293}
   - component: {fileID: 1840953298}
@@ -2123,6 +2145,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 674372189}
+--- !u!50 &1840953294
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1840953292}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 1
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!58 &1840953295
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2132,7 +2174,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -2202,7 +2244,7 @@ TrailRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1840953292}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

@@ -8,6 +8,9 @@ public class BallControllerNP : MonoBehaviour {
 	private bool gameOn = false;
 	private float ballSpeedY = 0;
 	private float ballSpeedX = 0;
+	private Vector2 velocity;
+	private Vector2 currPos;
+	private Vector2 lastPos;
 
 
 	// Use this for initialization
@@ -25,15 +28,19 @@ public class BallControllerNP : MonoBehaviour {
 			{
 				transform.position = new Vector2 (player.transform.position.x, 
 						(player.transform.position.y + (player.transform.localScale.y/2) + this.transform.localScale.y/2 + 0.1f));
-				if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0) )
+				if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(22220) )
 				{
 					gameOn = true;
 					ballSpeedY = gControll.initBallSpeed;
-					ballSpeedX = Random.Range(-0.3f, 0.3f);
+					//ballSpeedX = Random.Range(-gControll.initBallSpeed, gControll.initBallSpeed);
+					ballSpeedX = -gControll.initBallSpeed;
 				}
 			} else {
 				//Everything else that happens when the Game has begining and the ball is not sticking to the player
+				lastPos = transform.position;
 				transform.position = new Vector2(transform.position.x + ballSpeedX, transform.position.y + ballSpeedY);
+				currPos = transform.position;
+				velocity = currPos - lastPos;
 			}
 		} else {
 			this.CleanLevel();
@@ -47,18 +54,18 @@ public class BallControllerNP : MonoBehaviour {
 		return (ballPos.x - playerPos.x) / playerWidth;
 	}
 
-	// Sent when an incoming collider makes contact with this object's
-	// collider (2D physics only).
-	void OnCollisionEnter2D(Collision2D other)
-	{
-
-	}
-
 	// Sent when another object enters a trigger collider attached to this
 	// object (2D physics only).
 	void OnTriggerEnter2D(Collider2D other)
 	{
+		ContactPoint2D[] contacts = new ContactPoint2D[1];
+		other.GetComponent<Collider2D>().GetContacts(contacts);
+		Vector2 N = contacts[0].normal;
+		Vector2 V = velocity.normalized;
+		Vector2 R = Vector2.Reflect(V, N).normalized;
 
+		ballSpeedX = R.x * gControll.initBallSpeed;
+		ballSpeedY = R.y * gControll.initBallSpeed;
 	}
 	
 	// Sent when another object leaves a trigger collider attached to

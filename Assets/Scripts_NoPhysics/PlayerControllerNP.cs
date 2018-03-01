@@ -10,6 +10,8 @@ public class PlayerControllerNP : MonoBehaviour {
 	private GameControllerNP gControl;
 	private float moveSpeed;
 	private float moveHDir;
+	private bool hitwall = false;
+	private float wallPos;
 
 	// Use this for initialization
 	void Start () {
@@ -30,15 +32,27 @@ public class PlayerControllerNP : MonoBehaviour {
 			
 			transform.position = targetPotision;
 
+			if (hitwall)
+			{
+				if ((wallPos > this.transform.position.x && moveHDir < 0) || (wallPos < this.transform.position.x && moveHDir > 0))
+				{
+					moveSpeed = gControl.initPlayerSpeed;
+					hitwall = false;
+				}
+			}
+
 		} else {
 			transform.position = new Vector2 (0.0f, transform.position.y);
 		}
 	}
 
+	
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.GetComponent<Collider2D>().CompareTag("Boundaries")) {
 			moveSpeed = 0;
+			wallPos = other.transform.position.x;
+			hitwall = true;
 		}
 	}
 
