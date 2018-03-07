@@ -5,17 +5,27 @@ using UnityEngine;
 public class BallControllerNP : MonoBehaviour {
 	private GameControllerNP gControll;
 	public GameObject player;
-	private bool gameOn = false;
-	private float ballSpeedY = 0;
-	private float ballSpeedX = 0;
-	private Vector2 velocity;
-	private Vector2 currPos;
-	private Vector2 lastPos;
+	private RaycastHit2D[] hit;
+	private Rigidbody2D rb2D;
+	private float moveSpeed;
+	private float ballXSpeed;
+	private float ballYSpeed;
+	private Vector2[] directions;
+	private GameObject lastcol;
+	private Vector2 upLeft = new Vector2(-1,1);
+	private Vector2 upRight = new Vector2(1,1);
+	private Vector2 downRight = new Vector2(1,-1);
+	private Vector2 downLeft = new Vector2(-1,-1);
+	private bool gameOn;
 
 
 	// Use this for initialization
 	void Start () {
 		gControll = GameControllerNP.instance;
+		rb2D = this.GetComponent<Rigidbody2D>();
+		directions = new Vector2[] {Vector2.up, Vector2.right, Vector2.down, Vector2.left, 
+			upLeft, upRight, downRight, downLeft};
+		gameOn = false;
 	}
 	
 	// Update is called once per frame
@@ -31,16 +41,79 @@ public class BallControllerNP : MonoBehaviour {
 				if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(22220) )
 				{
 					gameOn = true;
-					ballSpeedY = gControll.initBallSpeed;
-					//ballSpeedX = Random.Range(-gControll.initBallSpeed, gControll.initBallSpeed);
-					ballSpeedX = -gControll.initBallSpeed;
+					
+					ballXSpeed = Random.Range(-gControll.initBallSpeed, gControll.initBallSpeed);
+					ballYSpeed = Random.Range(-gControll.initBallSpeed, gControll.initBallSpeed);
+					
+					//ballYSpeed = gControll.initBallSpeed;
+					//ballXSpeed = -gControll.initBallSpeed;
 				}
 			} else {
 				//Everything else that happens when the Game has begining and the ball is not sticking to the player
-				lastPos = transform.position;
-				transform.position = new Vector2(transform.position.x + ballSpeedX, transform.position.y + ballSpeedY);
-				currPos = transform.position;
-				velocity = currPos - lastPos;
+				foreach (Vector2 direction in directions)
+				{
+					hit = Physics2D.RaycastAll(transform.position, direction);
+					Debug.DrawRay(transform.position, direction);
+
+					if (hit[1].collider != null)
+					{
+						if (hit[1].distance <= (transform.localScale.x/4 * 3))
+						{	
+							if (lastcol != hit[1].transform.gameObject)
+							{
+								lastcol = hit[1].transform.gameObject;	
+								
+								if (direction == Vector2.up)
+								{
+									if (ballYSpeed > 0)
+									{							
+										ballYSpeed *= -1;
+									}
+								} else if (direction == Vector2.down) {
+									if (ballYSpeed < 0)
+									{							
+										ballYSpeed *= -1;
+									}
+								} else if (direction == Vector2.right) {
+									if (ballXSpeed > 0)
+									{							
+										ballXSpeed *= -1;
+									}
+								} else if (direction == Vector2.left) {
+									if (ballXSpeed < 0)
+									{							
+										ballXSpeed *= -1;
+									}
+								} else if (direction == upLeft) {
+									if (ballXSpeed < 0 && ballYSpeed > 0)
+									{							
+										ballXSpeed *= -1;
+										ballYSpeed *= -1;
+									}
+								} else if (direction == upRight) {
+									if (ballXSpeed > 0 && ballYSpeed > 0)
+									{							
+										ballXSpeed *= -1;
+										ballYSpeed *= -1;
+									}
+								} else if (direction == downRight) {
+									if (ballXSpeed > 0 && ballYSpeed < 0)
+									{							
+										ballXSpeed *= -1;
+										ballYSpeed *= -1;
+									}
+								} else if (direction == downLeft) {
+									if (ballXSpeed < 0 && ballYSpeed < 0)
+									{							
+										ballXSpeed *= -1;
+										ballYSpeed *= -1;
+									}
+								}
+							}
+						}
+					}
+				}
+				transform.position = new Vector2(transform.position.x + ballXSpeed, transform.position.y + ballYSpeed);
 			}
 		} else {
 			this.CleanLevel();
@@ -54,20 +127,6 @@ public class BallControllerNP : MonoBehaviour {
 		return (ballPos.x - playerPos.x) / playerWidth;
 	}
 
-	// Sent when another object enters a trigger collider attached to this
-	// object (2D physics only).
-	void OnTriggerEnter2D(Collider2D other)
-	{
-		ContactPoint2D[] contacts = new ContactPoint2D[1];
-		other.GetComponent<Collider2D>().GetContacts(contacts);
-		Vector2 N = contacts[0].normal;
-		Vector2 V = velocity.normalized;
-		Vector2 R = Vector2.Reflect(V, N).normalized;
-
-		ballSpeedX = R.x * gControll.initBallSpeed;
-		ballSpeedY = R.y * gControll.initBallSpeed;
-	}
-	
 	// Sent when another object leaves a trigger collider attached to
 	// this object (2D physics only).
 	void OnTriggerExit2D(Collider2D other)
