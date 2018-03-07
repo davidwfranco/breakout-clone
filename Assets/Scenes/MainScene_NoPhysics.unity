@@ -893,7 +893,6 @@ GameObject:
   - component: {fileID: 674372194}
   - component: {fileID: 674372192}
   - component: {fileID: 674372193}
-  - component: {fileID: 674372195}
   m_Layer: 0
   m_Name: Bar
   m_TagString: Player
@@ -1004,25 +1003,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 1}
   m_Direction: 1
---- !u!68 &674372195
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 674372189}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -0.49999994, y: 0.4541063}
-  - {x: -0.0045682886, y: 0.68115944}
-  - {x: 0.4982173, y: 0.4335276}
-  - {x: 0.49999997, y: 0}
 --- !u!1 &821075036
 GameObject:
   m_ObjectHideFlags: 0
