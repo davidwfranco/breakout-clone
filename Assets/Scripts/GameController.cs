@@ -19,6 +19,7 @@ public class GameController : MonoBehaviour {
     private int lives;
     public Text livesText;
     public float initBallSpeed;
+    public float initPlayerSpeed;
     public float poweUpChancePerc;
     public int powerUpFallSpeed;
     private LevelMaker lMaker;

@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameControllerNP : MonoBehaviour {
-	public static GameControllerNP instance;
+public class GameController_old : MonoBehaviour {
+	public static GameController_old instance;
 	public Camera cam;
     public Vector2 upperCorner;
     public Vector2 targeCamtWidth;
@@ -19,10 +19,9 @@ public class GameControllerNP : MonoBehaviour {
     private int lives;
     public Text livesText;
     public float initBallSpeed;
-    public float initPlayerSpeed;
     public float poweUpChancePerc;
     public int powerUpFallSpeed;
-    private LevelMakerNP lMaker;
+    private LevelMaker lMaker;
     public GameObject[] block;
 
 	// Awake is called when the script instance is being loaded.
@@ -44,9 +43,9 @@ public class GameControllerNP : MonoBehaviour {
             cam = Camera.main;
         }
         
-        lMaker = new LevelMakerNP();
+        lMaker = new LevelMaker();
         upperCorner = new Vector2(Screen.width, Screen.height);
-        targeCamtWidth = GameControllerNP.instance.cam.ScreenToWorldPoint(upperCorner);
+        targeCamtWidth = GameController_old.instance.cam.ScreenToWorldPoint(upperCorner);
         maxWidth = targeCamtWidth.x;
         maxHeigth = targeCamtWidth.y;
         lives = 3;

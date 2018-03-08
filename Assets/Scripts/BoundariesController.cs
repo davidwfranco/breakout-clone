@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoundariesController : MonoBehaviour {
+public class BoundariesControllerNP : MonoBehaviour {
 	private void OnCollisionEnter2D(Collision2D other) {
 		if (other.collider.CompareTag("Ball"))
 		{

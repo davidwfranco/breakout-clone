@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasePowerUpController : MonoBehaviour {
+public class BasePowerUpControllerNP : MonoBehaviour {
 
 	protected Rigidbody2D rdb2d;
 	private int vSpeed;
@@ -10,7 +10,7 @@ public class BasePowerUpController : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		rdb2d = GetComponent<Rigidbody2D>();
-		vSpeed = GameController.instance.powerUpFallSpeed;
+		vSpeed = GameControllerNP.instance.powerUpFallSpeed;
 		rdb2d.velocity = Vector2.down * vSpeed;
 	}
 

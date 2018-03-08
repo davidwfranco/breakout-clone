@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseBlockController : MonoBehaviour {
+public class BaseBlockControllerNP : MonoBehaviour {
 
 	private float chance;
 	public float powerUpChance;
@@ -13,7 +13,7 @@ public class BaseBlockController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		powerUpChance = GameController.instance.poweUpChancePerc/100;
+		powerUpChance = GameControllerNP.instance.poweUpChancePerc/100;
 	}
 	
 	// Update is called once per frame
@@ -34,7 +34,7 @@ public class BaseBlockController : MonoBehaviour {
 		hits ++;
 		if (hits >= blockLife)
 		{
-			GameController.instance.Scored();
+			GameControllerNP.instance.Scored();
 			Vector2 powerUpPos = ball.transform.position;
 			Destroy(gameObject);
 			chance = Random.Range(0f, 1f);

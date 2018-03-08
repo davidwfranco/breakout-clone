@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TargetFrameRate : MonoBehaviour {
+public class TargetFrameRateNP : MonoBehaviour {
 	public int frameRate = 60;
 	// Use this for initialization
 	void Awake () {

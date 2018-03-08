@@ -2,37 +2,57 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerControllerNP : MonoBehaviour {
 
-	private Rigidbody2D rdb2d;
 	private Vector2 rawPosition;
 	private Vector2 targetPotision;
 	private float targetWidth;
-	private GameController gControl;
-	public float moveSpeed;
+	private GameControllerNP gControl;
+	private float moveSpeed;
 	private float moveHDir;
+	private bool hitwall = false;
+	private float wallPos;
 
 	// Use this for initialization
 	void Start () {
-		rdb2d = GetComponent<Rigidbody2D>();
-		gControl = GameController.instance;
+		gControl = GameControllerNP.instance;
+		moveSpeed = gControl.initPlayerSpeed;
 	}
 	
 	// Update is called once per physics timestamp
 	void FixedUpdate () {
 		if (!gControl.gameOver) {
 			// Keyboard control
-			/* moveHDir = Input.GetAxisRaw("Horizontal");
-			rdb2d.velocity = new Vector2((moveSpeed * moveHDir), 0); */
+			moveHDir = Input.GetAxisRaw("Horizontal");
+			targetPotision = new Vector2((transform.position.x + (moveSpeed * moveHDir)), transform.position.y);
 
 			// Mouse Controller
- 			rawPosition = gControl.cam.ScreenToWorldPoint (Input.mousePosition);
-			targetPotision = new Vector2 (rawPosition.x, rdb2d.position.y);
+ 			//rawPosition = gControl.cam.ScreenToWorldPoint (Input.mousePosition);
+			//targetPotision = new Vector2 (rawPosition.x, transform.position.y);
+			
+			transform.position = targetPotision;
 
-			rdb2d.MovePosition(targetPotision);
+			if (hitwall)
+			{
+				if ((wallPos > this.transform.position.x && moveHDir < 0) || (wallPos < this.transform.position.x && moveHDir > 0))
+				{
+					moveSpeed = gControl.initPlayerSpeed;
+					hitwall = false;
+				}
+			}
 
 		} else {
-			rdb2d.MovePosition (new Vector2 (0.0f, rdb2d.position.y));
+			transform.position = new Vector2 (0.0f, transform.position.y);
+		}
+	}
+
+	
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.GetComponent<Collider2D>().CompareTag("Boundaries")) {
+			moveSpeed = 0;
+			wallPos = other.transform.position.x;
+			hitwall = true;
 		}
 	}
 

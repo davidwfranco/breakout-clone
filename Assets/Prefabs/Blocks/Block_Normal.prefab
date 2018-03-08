@@ -80,9 +80,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   powerUpChance: 0
   powerUps:
-  - {fileID: 1849164270083380, guid: f8791ccc5d62444e396a880c17185c80, type: 2}
   - {fileID: 1349368861489986, guid: 33eb64611d7ea44f6a9a5f27cf10836c, type: 2}
-  - {fileID: 1474849084365400, guid: eb45dd5b4d3dc4483ae7581b6180a47b, type: 2}
+  - {fileID: 1349368861489986, guid: 33eb64611d7ea44f6a9a5f27cf10836c, type: 2}
+  - {fileID: 1349368861489986, guid: 33eb64611d7ea44f6a9a5f27cf10836c, type: 2}
   blockLife: 1
 --- !u!212 &212668336828638794
 SpriteRenderer:

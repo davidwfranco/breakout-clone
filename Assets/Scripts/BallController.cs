@@ -3,190 +3,156 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BallController : MonoBehaviour {
-	private Rigidbody2D rdb2d;
-	private float ballSpeed;
+	private GameController gControll;
 	public GameObject player;
-	private bool gameOn = false;
-	public bool isPlayerSticky = false;
-	private Vector2 oldVelocity;
-	private Collider2D firstCollider;
-	private bool haveAlreadyCollided;
-	private float powerUpChance;
-	private float chance;
+	private RaycastHit2D[] hit;
+	private Rigidbody2D rb2D;
+	private float moveSpeed;
+	private float ballXSpeed;
+	private float ballYSpeed;
+	private Vector2[] directions;
+	private GameObject lastcol;
+	private Vector2 upLeft = new Vector2(-1,1);
+	private Vector2 upRight = new Vector2(1,1);
+	private Vector2 downRight = new Vector2(1,-1);
+	private Vector2 downLeft = new Vector2(-1,-1);
+	private bool gameOn;
+	private float frameCount;
+	private bool isPlayerSticky = false;
 
 
 	// Use this for initialization
 	void Start () {
-		rdb2d = GetComponent<Rigidbody2D>();
-		ballSpeed = GameController.instance.initBallSpeed;
-		firstCollider = null;
-		haveAlreadyCollided = false;
+		gControll = GameController.instance;
+		rb2D = this.GetComponent<Rigidbody2D>();
+		directions = new Vector2[] {Vector2.up, Vector2.right, Vector2.down, Vector2.left, 
+			upLeft, upRight, downRight, downLeft};
+		gameOn = false;
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		//Activate gravity for some frames to preven the ball of been stuck going sideways
-		if (!GameController.instance.gameOver)
+		if (!gControll.gameOver)
 		{
-			if (rdb2d.velocity.y > -2 && rdb2d.velocity.y < 2)
-			{
-				rdb2d.gravityScale = 3;
-			}
-			else
-			{
-				rdb2d.gravityScale = 0;
-			}
-
 			//Stuck the ball to the player ate the begining of the game
-			if (!gameOn)
-			{
-				rdb2d.transform.position = new Vector2 (player.transform.position.x, (player.transform.position.y + 0.5f));
-
-				if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0) )
-				{
-					rdb2d.velocity = new Vector2(/* 0 */ Random.Range(-3,3), ballSpeed);
+			if (!gameOn) {
+				transform.position = new Vector2 (player.transform.position.x, 
+						(player.transform.position.y + (player.transform.localScale.y/2) + this.transform.localScale.y/2 + 0.1f));
+				if (Input.GetKeyDown(KeyCode.Space) /*|| Input.GetMouseButtonDown(22220)*/ ) {
 					gameOn = true;
+					
+					ballXSpeed = Random.Range(-gControll.initBallSpeed, gControll.initBallSpeed);
+					ballYSpeed = Random.Range(-gControll.initBallSpeed, gControll.initBallSpeed);
+					
+					//ballYSpeed = gControll.initBallSpeed;
+					//ballXSpeed = -gControll.initBallSpeed;
 				}
-			}
-		}
-		else
-		{
-			rdb2d.velocity = Vector2.zero;
-		}
+			} else {
+				//Everything else that happens when the Game has begining and the ball is not sticking to the player
+				foreach (Vector2 direction in directions) {
+					//Check the distance to other objects to determine if it has to change the path it's moving
+					hit = Physics2D.RaycastAll(transform.position, direction);
+					Debug.DrawRay(transform.position, direction);
 
-		oldVelocity = rdb2d.velocity;
+					if (hit[1].collider != null) {
+						if (hit[1].distance <= (transform.localScale.x/4 * 3)) {
+
+							if (hit[1].collider.CompareTag("Blocks")) {
+								Debug.Log("Bateu no Bloco");
+								hit[1].transform.gameObject.SendMessage("BallHit");
+							} else if (hit[1].collider.CompareTag("Player") && isPlayerSticky) {
+								gameOn = false;
+								isPlayerSticky = false;
+							}
+
+							if (lastcol != hit[1].transform.gameObject) {
+								lastcol = hit[1].transform.gameObject;	
+								
+								if (direction == Vector2.up) {
+									if (ballYSpeed > 0) {							
+										ballYSpeed *= -1;
+									}
+								} else if (direction == Vector2.down) {
+									if (ballYSpeed < 0) {							
+										ballYSpeed *= -1;
+									}
+								} else if (direction == Vector2.right) {
+									if (ballXSpeed > 0) {							
+										ballXSpeed *= -1;
+									}
+								} else if (direction == Vector2.left) {
+									if (ballXSpeed < 0) {							
+										ballXSpeed *= -1;
+									}
+								} else if (direction == upLeft) {
+									if (ballXSpeed < 0 && ballYSpeed > 0) {							
+										ballXSpeed *= -1;
+										ballYSpeed *= -1;
+									}
+								} else if (direction == upRight) {
+									if (ballXSpeed > 0 && ballYSpeed > 0) {							
+										ballXSpeed *= -1;
+										ballYSpeed *= -1;
+									}
+								} else if (direction == downRight) {
+									if (ballXSpeed > 0 && ballYSpeed < 0) {							
+										ballXSpeed *= -1;
+										ballYSpeed *= -1;
+									}
+								} else if (direction == downLeft) {
+									if (ballXSpeed < 0 && ballYSpeed < 0) {							
+										ballXSpeed *= -1;
+										ballYSpeed *= -1;
+									}
+								}
+							}
+						}
+					}
+				}
+				
+				//Activate gravity for some frames to preven the ball of been stuck going sideways
+				if (ballYSpeed == 0) {
+					if (frameCount > 10) {
+						ballYSpeed += Random.Range(-0.1f, 0.1f);
+						frameCount = 0;
+					} else {
+						frameCount++;
+					}
+				}				
+
+				//Move player based on the result of the coditions above
+				transform.position = new Vector2(transform.position.x + ballXSpeed, transform.position.y + ballYSpeed);
+			}
+		} else {
+			this.CleanLevel();
+		}
 	}
 
  	// Create a function that receives the ball position, the player position and the player width
 	// with this it returns the collision pos
-	private float ballCollision( Vector2 ballPos, Vector2 playerPos, float playerWidth)
-	{
+	private float ballCollision( Vector2 ballPos, Vector2 playerPos, float playerWidth) {
 		return (ballPos.x - playerPos.x) / playerWidth;
 	}
 
-	// Sent when an incoming collider makes contact with this object's
-	// collider (2D physics only).
-	void OnCollisionEnter2D(Collision2D other)
-	{
-
-		ContactPoint2D contact = other.contacts[0];
-		Vector2 reflectedVelocity = Vector2.Reflect(oldVelocity, contact.normal);
-
-		// If the ball collides with the player it bounces the ball upwards in a different horizontal position
-		// depending on how faz it hits from the half point
-		if (other.collider.CompareTag("Player"))
-		{
-			if (isPlayerSticky)
-			{
-				gameOn = false;
-				isPlayerSticky = false;
-			}
-			else 
-			{
-				float resBallCollision = ballCollision(transform.position, other.transform.position, ((CapsuleCollider2D)other.collider).size.x);
-				
-				Vector2 newDirection = new Vector2(resBallCollision,1).normalized;
-				
-				rdb2d.velocity = newDirection * ballSpeed;
-			}
-		}
-		else if (other.collider.CompareTag("Boundaries"))
-		{
-			rdb2d.velocity = reflectedVelocity;
-		}
-	}
-
-	// Sent when another object enters a trigger collider attached to this
-	// object (2D physics only).
-	void OnTriggerEnter2D(Collider2D other)
-	{
-		// Destroy the ball on collision with the ground
-		if (other.GetComponent<Collider2D>().CompareTag("Floor"))
-		{	
-			rdb2d.velocity = Vector2.zero;
-			ballSpeed = GameController.instance.initBallSpeed;
-			gameOn = false;
-			GameController.instance.LoseLife();
-		}
-		// If it's not the floor than start the tratment to score, destroy the block and bounce the ball
-		else 
-		{
-			if (firstCollider == null)
-			{
-				firstCollider = other;
-				if (firstCollider.GetComponent<Collider2D>().CompareTag("Blocks"))
-				{
-					if (GameController.instance.GetScore() > 0 && GameController.instance.GetScore() % 3 == 0)
-					{
-						Accelerate(20);
-					}
-					
-					if (rdb2d.velocity.y > 0)
-					{
-						rdb2d.velocity = Vector2.zero;
-						rdb2d.velocity = new Vector2(oldVelocity.x, -ballSpeed);	
-					}
-					else 
-					{
-						rdb2d.velocity = Vector2.zero;
-						rdb2d.velocity = new Vector2(oldVelocity.x, ballSpeed);	
-					}
-				}
-				haveAlreadyCollided = true;
-			}
-		}
-
-/* 		else if (other.GetComponent<Collider2D>().CompareTag("Blocks"))
-		{
-			GameController.instance.Scored();
-			
-			if (GameController.instance.GetScore() > 0 && GameController.instance.GetScore() % 2 == 0)
-			{
-				ballSpeed += 1;
-			}
-			
-			if (rdb2d.velocity.y > 0)
-			{
-				rdb2d.velocity = Vector2.zero;
-				rdb2d.velocity = new Vector2(oldVelocity.x, -ballSpeed);	
-			}
-			else 
-			{
-				rdb2d.velocity = Vector2.zero;
-				rdb2d.velocity = new Vector2(oldVelocity.x, ballSpeed);	
-			}
-		} */
-	}
-	
-	// Sent when another object leaves a trigger collider attached to
-	// this object (2D physics only).
-	void OnTriggerExit2D(Collider2D other)
-	{
-		haveAlreadyCollided = false;
-
-		if (!haveAlreadyCollided){
-			firstCollider = null;
-		}
-	}
-
-	public void SlowDown(int ballSpeedDownPerc)
-	{
-		if ((ballSpeed - (ballSpeed * (ballSpeedDownPerc/100f))) > 2.1f)
-		{
-			Debug.Log("Before ballS = " + ballSpeed);
-			ballSpeed *= (1 - (ballSpeedDownPerc/100f));	
-			Debug.Log("After ballS = " + ballSpeed);
-		}
+	public void SlowDown(int ballSpeedDownPerc) {
+		// if ((ballSpeed - (ballSpeed * (ballSpeedDownPerc/100f))) > 2.1f)
+		// {
+		// 	Debug.Log("Before ballS = " + ballSpeed);
+		// 	ballSpeed *= (1 - (ballSpeedDownPerc/100f));	
+		// 	Debug.Log("After ballS = " + ballSpeed);
+		// }
 		
 	}
 	
-	public void Accelerate(int ballAccelPerc)
-	{
-		ballSpeed *= (1 + (ballAccelPerc/100f));
+	public void Accelerate(int ballAccelPerc) {
+		// ballSpeed *= (1 + (ballAccelPerc/100f));
 	}
 
-	public void CleanLevel()
-	{
+	public void CleanLevel() {
 		Destroy(gameObject);
+	}
+
+	public void StickToPlayer() {
+		isPlayerSticky = true;
 	}
 }

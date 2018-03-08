@@ -2,6 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StoneBlockController : BaseBlockController {
+public class StoneBlockControllerNP : BaseBlockControllerNP {
 
 }
