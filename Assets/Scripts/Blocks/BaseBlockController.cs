@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseBlockControllerNP : MonoBehaviour {
+public class BaseBlockController : MonoBehaviour {
 
 	private float chance;
-	public float powerUpChance;
+	private float powerUpChance;
 	public GameObject[] powerUps;
 	private int hits = 0;
 	public int blockLife;
@@ -13,36 +13,21 @@ public class BaseBlockControllerNP : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		powerUpChance = GameControllerNP.instance.poweUpChancePerc/100;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-	
-	void OnTriggerExit2D(Collider2D other)
-	{
-		if (other.GetComponent<Collider2D>().CompareTag("Ball"))
-		{
-			BallHit(other);			
-		}
+		powerUpChance = GameController.instance.poweUpChancePerc/100;
 	}
 
-	public void BallHit(Collider2D ball)
-	{
+	public void BallHit() {
 		hits ++;
 		if (hits >= blockLife)
 		{
-			GameControllerNP.instance.Scored();
-			Vector2 powerUpPos = ball.transform.position;
-			Destroy(gameObject);
+			GameController.instance.Scored();
+			Vector2 powerUpPos = transform.position;
 			chance = Random.Range(0f, 1f);
 			if ( chance <= powerUpChance)
 			{
 				Instantiate(powerUps[Random.Range(0,powerUps.Length)], powerUpPos, Quaternion.identity);
 			}
+			Destroy(gameObject);
 		}
-
 	}
 }

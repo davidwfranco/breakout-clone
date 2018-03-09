@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallSpeedDownPowerUpNP : BasePowerUpController {
+public class BallSpeedDownPowerUp : BasePowerUpController {
 
     private GameObject ball;
     public int ballSpeedDownPerc;

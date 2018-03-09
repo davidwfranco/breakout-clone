@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4848801997336672}
   - component: {fileID: 212668336828638794}
   - component: {fileID: 61145086933457320}
-  - component: {fileID: 114995280392340902}
+  - component: {fileID: 114618410790277264}
   m_Layer: 0
   m_Name: Block_Stone
   m_TagString: Blocks
@@ -67,7 +67,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &114995280392340902
+--- !u!114 &114618410790277264
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -75,10 +75,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1846027465766138}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffb108fcf88c145a3a667d41a176aad2, type: 3}
+  m_Script: {fileID: 11500000, guid: 4534c1ed28a7b41dc91b8162351872e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUpChance: 0
   powerUps:
   - {fileID: 1849164270083380, guid: f8791ccc5d62444e396a880c17185c80, type: 2}
   - {fileID: 1349368861489986, guid: 33eb64611d7ea44f6a9a5f27cf10836c, type: 2}

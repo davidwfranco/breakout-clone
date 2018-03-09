@@ -2,6 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WoodBlockControllerNP : BaseBlockControllerNP {
+public class WoodBlockController : BaseBlockController {
 
 }

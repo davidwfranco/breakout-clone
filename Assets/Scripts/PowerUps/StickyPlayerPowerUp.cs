@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StickyPlayerPowerUpNP : BasePowerUpController {
+public class StickyPlayerPowerUp : BasePowerUpController {
 
     private GameObject ball;
 

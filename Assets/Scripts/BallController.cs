@@ -58,7 +58,6 @@ public class BallController : MonoBehaviour {
 						if (hit[1].distance <= (transform.localScale.x/4 * 3)) {
 
 							if (hit[1].collider.CompareTag("Blocks")) {
-								Debug.Log("Bateu no Bloco");
 								hit[1].transform.gameObject.SendMessage("BallHit");
 							} else if (hit[1].collider.CompareTag("Player") && isPlayerSticky) {
 								gameOn = false;

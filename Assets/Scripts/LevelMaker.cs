@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class LevelMakerNP {
+public class LevelMaker {
 
 	public int[,] blockTypeArray;
 	public int[,] oneShot;
@@ -14,7 +14,7 @@ public class LevelMakerNP {
 	// public double padding;
 	// public double[] blockSize;
 
-	public LevelMakerNP(){
+	public LevelMaker(){
 		miscBlocks = new int[,] {
 			{0, 3, 2, 1, 2, 1, 2, 3, 0},
 			{3, 2, 1, 1, 1, 1, 1, 2, 3},
@@ -42,7 +42,7 @@ public class LevelMakerNP {
 			{0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, 1, 0, 0, 0, 0}
 			};
-		blockTypeArray = fastGame;
+		blockTypeArray = miscBlocks;
 
 		blockPosArray = new double[,,] {
 			{{-2.4, 1.8}, {-1.8, 1.8}, {-1.2, 1.8}, {-0.6, 1.8}, {0.0, 1.8}, {0.6, 1.8}, {1.2, 1.8}, {1.8, 1.8}, {2.4, 1.8}},

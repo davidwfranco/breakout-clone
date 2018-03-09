@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControllerNP : MonoBehaviour {
+public class PlayerController : MonoBehaviour {
 
 	private Vector2 rawPosition;
 	private Vector2 targetPotision;
 	private float targetWidth;
-	private GameControllerNP gControl;
+	private GameController gControl;
 	private float moveSpeed;
 	private float moveHDir;
 	private bool hitwall = false;
@@ -15,7 +15,7 @@ public class PlayerControllerNP : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		gControl = GameControllerNP.instance;
+		gControl = GameController.instance;
 		moveSpeed = gControl.initPlayerSpeed;
 	}
 	
