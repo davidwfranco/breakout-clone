@@ -46,7 +46,13 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	public void Enlarge(float ratio) {
+		transform.localScale = new Vector2(transform.localScale.x * (1f + ratio), transform.localScale.y);
+	}
 	
+	public void Contract(float ratio) {
+		transform.localScale = new Vector2(transform.localScale.x * (1f - ratio), transform.localScale.y);
+	}
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.GetComponent<Collider2D>().CompareTag("Boundaries")) {

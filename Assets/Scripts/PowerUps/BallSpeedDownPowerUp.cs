@@ -5,11 +5,10 @@ using UnityEngine;
 public class BallSpeedDownPowerUp : BasePowerUpController {
 
     private GameObject ball;
-    public int ballSpeedDownPerc;
 
     protected override void ExecPowerUp(Collider2D other)
     {   
         ball = GameObject.FindGameObjectsWithTag("Ball")[0];
-        ball.SendMessage("SlowDown", 30);
+        ball.gameObject.SendMessage("SlowDown", 0.3f);
     }
 }

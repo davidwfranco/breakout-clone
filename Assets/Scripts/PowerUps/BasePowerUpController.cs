@@ -18,6 +18,7 @@ public class BasePowerUpController : MonoBehaviour {
 	{
 		if (other.GetComponent<Collider2D>().CompareTag("Player"))
 		{
+			ExecPowerUp(other);
 			Destroy(gameObject);
 		}
 		else

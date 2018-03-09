@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ballTestRC : MonoBehaviour {
 	RaycastHit2D[] hit;
-	Rigidbody2D rb2D;
 	public float moveSpeed;
 	float ballXSpeed;
 	float ballYSpeed;
@@ -17,7 +16,6 @@ public class ballTestRC : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		rb2D = this.GetComponent<Rigidbody2D>();
 		ballXSpeed = Random.Range(-moveSpeed, moveSpeed);
 		ballYSpeed = Random.Range(-moveSpeed, moveSpeed);
 		directions = new Vector2[] {Vector2.up, Vector2.right, Vector2.down, Vector2.left, 

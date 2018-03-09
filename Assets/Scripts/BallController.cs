@@ -6,7 +6,6 @@ public class BallController : MonoBehaviour {
 	private GameController gControll;
 	public GameObject player;
 	private RaycastHit2D[] hit;
-	private Rigidbody2D rb2D;
 	private float moveSpeed;
 	private float ballXSpeed;
 	private float ballYSpeed;
@@ -24,7 +23,6 @@ public class BallController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		gControll = GameController.instance;
-		rb2D = this.GetComponent<Rigidbody2D>();
 		directions = new Vector2[] {Vector2.up, Vector2.right, Vector2.down, Vector2.left, 
 			upLeft, upRight, downRight, downLeft};
 		gameOn = false;
@@ -41,11 +39,11 @@ public class BallController : MonoBehaviour {
 				if (Input.GetKeyDown(KeyCode.Space) /*|| Input.GetMouseButtonDown(22220)*/ ) {
 					gameOn = true;
 					
-					ballXSpeed = Random.Range(-gControll.initBallSpeed, gControll.initBallSpeed);
-					ballYSpeed = Random.Range(-gControll.initBallSpeed, gControll.initBallSpeed);
+					//ballXSpeed = Random.Range(-gControll.initBallSpeed, gControll.initBallSpeed);
+					//ballYSpeed = Random.Range(0, gControll.initBallSpeed);
 					
-					//ballYSpeed = gControll.initBallSpeed;
-					//ballXSpeed = -gControll.initBallSpeed;
+					ballYSpeed = gControll.initBallSpeed;
+					ballXSpeed = gControll.initBallSpeed;
 				}
 			} else {
 				//Everything else that happens when the Game has begining and the ball is not sticking to the player
@@ -57,12 +55,7 @@ public class BallController : MonoBehaviour {
 					if (hit[1].collider != null) {
 						if (hit[1].distance <= (transform.localScale.x/4 * 3)) {
 
-							if (hit[1].collider.CompareTag("Blocks")) {
-								hit[1].transform.gameObject.SendMessage("BallHit");
-							} else if (hit[1].collider.CompareTag("Player") && isPlayerSticky) {
-								gameOn = false;
-								isPlayerSticky = false;
-							}
+
 
 							if (lastcol != hit[1].transform.gameObject) {
 								lastcol = hit[1].transform.gameObject;	
@@ -105,6 +98,15 @@ public class BallController : MonoBehaviour {
 									}
 								}
 							}
+							
+							if (hit[1].collider.CompareTag("Blocks")) {
+								hit[1].transform.gameObject.SendMessage("BallHit");
+							} else if (hit[1].collider.CompareTag("Player") && isPlayerSticky) {
+								gameOn = false;
+								isPlayerSticky = false;
+							} else if (hit[1].collider.CompareTag("Boundaries")) {
+								hit[1].transform.gameObject.SendMessage("Wobble");
+							} 
 						}
 					}
 				}
@@ -133,14 +135,15 @@ public class BallController : MonoBehaviour {
 		return (ballPos.x - playerPos.x) / playerWidth;
 	}
 
-	public void SlowDown(int ballSpeedDownPerc) {
-		// if ((ballSpeed - (ballSpeed * (ballSpeedDownPerc/100f))) > 2.1f)
-		// {
-		// 	Debug.Log("Before ballS = " + ballSpeed);
-		// 	ballSpeed *= (1 - (ballSpeedDownPerc/100f));	
-		// 	Debug.Log("After ballS = " + ballSpeed);
-		// }
+	public void SlowDown(float ratio) {
 		
+		if ((Mathf.Abs(ballXSpeed) * (1.0f - ratio) > 0.05f) || (Mathf.Abs(ballYSpeed) * (1.0f - ratio) > 0.05f))
+		{
+			Debug.Log("Before = " + ballXSpeed + " / " + ballYSpeed);
+			ballXSpeed *= 1 - ratio;
+			ballYSpeed *= 1 - ratio;
+			Debug.Log("After = " + ballXSpeed + " / " + ballYSpeed);
+		}		
 	}
 	
 	public void Accelerate(int ballAccelPerc) {

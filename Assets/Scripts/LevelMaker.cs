@@ -42,7 +42,7 @@ public class LevelMaker {
 			{0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, 1, 0, 0, 0, 0}
 			};
-		blockTypeArray = miscBlocks;
+		blockTypeArray = allNormal;
 
 		blockPosArray = new double[,,] {
 			{{-2.4, 1.8}, {-1.8, 1.8}, {-1.2, 1.8}, {-0.6, 1.8}, {0.0, 1.8}, {0.6, 1.8}, {1.2, 1.8}, {1.8, 1.8}, {2.4, 1.8}},
