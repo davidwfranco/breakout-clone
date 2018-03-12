@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 50109779693087962}
   - component: {fileID: 61209422435597500}
   - component: {fileID: 114764487529964768}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: PU_StickyPlayer
   m_TagString: PowerUp
   m_Icon: {fileID: 0}

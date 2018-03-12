@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 50241520600937608}
   - component: {fileID: 61030786278333520}
   - component: {fileID: 114390058573287524}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: PU_GrowBar
   m_TagString: PowerUp
   m_Icon: {fileID: 0}

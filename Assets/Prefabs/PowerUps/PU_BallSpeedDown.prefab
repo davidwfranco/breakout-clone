@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 50627640502316676}
   - component: {fileID: 61007213954230804}
   - component: {fileID: 114745781518050192}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: PU_BallSpeedDown
   m_TagString: PowerUp
   m_Icon: {fileID: 0}
@@ -99,7 +99,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac16b81475174c63afe32c16e377e3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ballSpeedDownPerc: 80
 --- !u!212 &212942400520493852
 SpriteRenderer:
   m_ObjectHideFlags: 1
