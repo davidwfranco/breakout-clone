@@ -23,9 +23,12 @@ public class BallController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		gControll = GameController.instance;
-		directions = new Vector2[] {Vector2.up, Vector2.right, Vector2.down, Vector2.left, 
+		directions = new Vector2[8] {Vector2.up, Vector2.right, Vector2.down, Vector2.left, 
 			upLeft, upRight, downRight, downLeft};
 		gameOn = false;
+		
+		ballXSpeed = Random.Range(-gControll.initBallSpeed, gControll.initBallSpeed);
+		ballYSpeed = Random.Range(0, gControll.initBallSpeed);
 	}
 	
 	// Update is called once per frame
@@ -39,23 +42,18 @@ public class BallController : MonoBehaviour {
 				if (Input.GetKeyDown(KeyCode.Space) /*|| Input.GetMouseButtonDown(22220)*/ ) {
 					gameOn = true;
 					
-					//ballXSpeed = Random.Range(-gControll.initBallSpeed, gControll.initBallSpeed);
-					//ballYSpeed = Random.Range(0, gControll.initBallSpeed);
-					
-					ballYSpeed = gControll.initBallSpeed;
-					ballXSpeed = gControll.initBallSpeed;
+					ballXSpeed = Random.Range(-gControll.initBallSpeed, gControll.initBallSpeed);
+					ballYSpeed = Random.Range(0, gControll.initBallSpeed);
 				}
 			} else {
 				//Everything else that happens when the Game has begining and the ball is not sticking to the player
 				foreach (Vector2 direction in directions) {
 					//Check the distance to other objects to determine if it has to change the path it's moving
 					hit = Physics2D.RaycastAll(transform.position, direction);
-					Debug.DrawRay(transform.position, direction);
+					// Debug.DrawRay(transform.position, direction);
 
 					if (hit[1].collider != null) {
-						if (hit[1].distance <= (transform.localScale.x/4 * 3)) {
-
-
+						if (hit[1].distance <= (transform.localScale.x/4 * 3) && !hit[1].collider.CompareTag("Floor")) {
 
 							if (lastcol != hit[1].transform.gameObject) {
 								lastcol = hit[1].transform.gameObject;	
@@ -113,7 +111,7 @@ public class BallController : MonoBehaviour {
 				
 				//Activate gravity for some frames to preven the ball of been stuck going sideways
 				if (ballYSpeed == 0) {
-					if (frameCount > 10) {
+					if (frameCount > 300) {
 						ballYSpeed += Random.Range(-0.1f, 0.1f);
 						frameCount = 0;
 					} else {
@@ -131,23 +129,28 @@ public class BallController : MonoBehaviour {
 
  	// Create a function that receives the ball position, the player position and the player width
 	// with this it returns the collision pos
-	private float ballCollision( Vector2 ballPos, Vector2 playerPos, float playerWidth) {
-		return (ballPos.x - playerPos.x) / playerWidth;
-	}
+	// private float ballCollision( Vector2 ballPos, Vector2 playerPos, float playerWidth) {
+	// 	return (ballPos.x - playerPos.x) / playerWidth;
+	// }
 
 	public void SlowDown(float ratio) {
-		
 		if ((Mathf.Abs(ballXSpeed) * (1.0f - ratio) > 0.05f) || (Mathf.Abs(ballYSpeed) * (1.0f - ratio) > 0.05f))
 		{
-			Debug.Log("Before = " + ballXSpeed + " / " + ballYSpeed);
+			// Debug.Log("Before = " + ballXSpeed + " / " + ballYSpeed);
 			ballXSpeed *= 1 - ratio;
 			ballYSpeed *= 1 - ratio;
-			Debug.Log("After = " + ballXSpeed + " / " + ballYSpeed);
+			// Debug.Log("After = " + ballXSpeed + " / " + ballYSpeed);
 		}		
 	}
 	
-	public void Accelerate(int ballAccelPerc) {
-		// ballSpeed *= (1 + (ballAccelPerc/100f));
+	public void Accelerate(float ratio) {
+		if ((Mathf.Abs(ballXSpeed) * (1.0f - ratio) < 0.05f) || (Mathf.Abs(ballYSpeed) * (1.0f - ratio) > 0.05f))
+		{
+			// Debug.Log("Before = " + ballXSpeed + " / " + ballYSpeed);
+			ballXSpeed *= 1 - ratio;
+			ballYSpeed *= 1 - ratio;
+			// Debug.Log("After = " + ballXSpeed + " / " + ballYSpeed);
+		}		
 	}
 
 	public void CleanLevel() {
@@ -156,5 +159,13 @@ public class BallController : MonoBehaviour {
 
 	public void StickToPlayer() {
 		isPlayerSticky = true;
+	}
+
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.GetComponent<Collider2D>().CompareTag("Floor")) {
+			gControll.LoseLife();
+			gameOn=false;
+		}
 	}
 }
