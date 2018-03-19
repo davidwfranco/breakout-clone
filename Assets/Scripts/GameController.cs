@@ -24,7 +24,10 @@ public class GameController : MonoBehaviour {
     public int powerUpFallSpeed;
     private LevelMaker lMaker;
     public GameObject[] block;
-
+    public GameObject player;
+    public GameObject ball;
+    private GameObject initBall;
+    private GameObject newBall;
 	// Awake is called when the script instance is being loaded.
 	void Awake()
 	{
@@ -70,6 +73,8 @@ public class GameController : MonoBehaviour {
                 }
             }
         }
+        initBall = Instantiate(ball,new Vector2 (player.transform.position.x, 
+            (player.transform.position.y + (player.transform.localScale.y/2) + ball.transform.localScale.y/2 + 0.1f)), Quaternion.identity) as GameObject;
 	}
 
 	// Update is called once per frame
@@ -87,6 +92,10 @@ public class GameController : MonoBehaviour {
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}
 
+        if (!gameOver && Input.GetKeyDown(KeyCode.N))
+        {
+            newBall =  Instantiate(ball, initBall.transform.position, Quaternion.identity) as GameObject;
+        }
         //Endgame if all the blocks have been cleaned
         if (GameObject.FindGameObjectsWithTag("Blocks").Length == 0)
         {

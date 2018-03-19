@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour {
 	private GameController gControll;
-	public GameObject player;
+	private GameObject player;
 	private RaycastHit2D[] hit;
 	private float moveSpeed;
 	private float ballXSpeed;
@@ -29,6 +29,11 @@ public class BallController : MonoBehaviour {
 		
 		ballXSpeed = Random.Range(-gControll.initBallSpeed, gControll.initBallSpeed);
 		ballYSpeed = Random.Range(0, gControll.initBallSpeed);
+
+		player = GameObject.FindGameObjectsWithTag("Player")[0];
+		if (GameObject.FindGameObjectsWithTag("Ball").Length > 1) {
+			gameOn = true;
+		}
 	}
 	
 	// Update is called once per frame
@@ -52,11 +57,11 @@ public class BallController : MonoBehaviour {
 					hit = Physics2D.RaycastAll(transform.position, direction);
 					// Debug.DrawRay(transform.position, direction);
 
-					if (hit[1].collider != null) {
-						if (hit[1].distance <= (transform.localScale.x/4 * 3) && !hit[1].collider.CompareTag("Floor")) {
+					if (hit[0].collider != null) {
+						if (hit[0].distance <= (transform.localScale.x/4 * 3) && !hit[0].collider.CompareTag("Floor")) {
 
-							if (lastcol != hit[1].transform.gameObject) {
-								lastcol = hit[1].transform.gameObject;	
+							if (lastcol != hit[0].transform.gameObject) {
+								lastcol = hit[0].transform.gameObject;	
 								
 								if (direction == Vector2.up) {
 									if (ballYSpeed > 0) {							
@@ -97,13 +102,13 @@ public class BallController : MonoBehaviour {
 								}
 							}
 							
-							if (hit[1].collider.CompareTag("Blocks")) {
-								hit[1].transform.gameObject.SendMessage("BallHit");
-							} else if (hit[1].collider.CompareTag("Player") && isPlayerSticky) {
+							if (hit[0].collider.CompareTag("Blocks")) {
+								hit[0].transform.gameObject.SendMessage("BallHit");
+							} else if (hit[0].collider.CompareTag("Player") && isPlayerSticky) {
 								gameOn = false;
 								isPlayerSticky = false;
-							} else if (hit[1].collider.CompareTag("Boundaries")) {
-								hit[1].transform.gameObject.SendMessage("Wobble");
+							} else if (hit[0].collider.CompareTag("Boundaries")) {
+								hit[0].transform.gameObject.SendMessage("Wobble");
 							} 
 						}
 					}
@@ -127,8 +132,8 @@ public class BallController : MonoBehaviour {
 		}
 	}
 
- 	// Create a function that receives the ball position, the player position and the player width
-	// with this it returns the collision pos
+ 	// // Create a function that receives the ball position, the player position and the player width
+	// // with this it returns the collision pos
 	// private float ballCollision( Vector2 ballPos, Vector2 playerPos, float playerWidth) {
 	// 	return (ballPos.x - playerPos.x) / playerWidth;
 	// }
@@ -161,11 +166,20 @@ public class BallController : MonoBehaviour {
 		isPlayerSticky = true;
 	}
 
+	public void SetGameOn(){
+		Debug.Log("Set Game On.");
+		gameOn = true;
+	}
+
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.GetComponent<Collider2D>().CompareTag("Floor")) {
-			gControll.LoseLife();
-			gameOn=false;
+			if (GameObject.FindGameObjectsWithTag("Ball").Length > 1) {
+				Destroy(gameObject);
+			} else {
+				gControll.LoseLife();
+				gameOn=false;
+			}
 		}
 	}
 }
