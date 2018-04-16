@@ -1428,10 +1428,11 @@ MonoBehaviour:
   gameLooseText: {fileID: 172866960}
   gameWinText: {fileID: 821075036}
   scoreText: {fileID: 1525101852}
+  lives: 5
   livesText: {fileID: 340660211}
   initBallSpeed: 0.1
   initPlayerSpeed: 0.2
-  poweUpChancePerc: 100
+  poweUpChancePerc: 9.9
   powerUpFallSpeed: 2
   block:
   - {fileID: 1846027465766138, guid: 3d8a82eca5d2c452a854998d299a3797, type: 2}

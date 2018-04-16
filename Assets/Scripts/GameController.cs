@@ -5,22 +5,22 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
+    // Declaring all the variables to the script behavior
 	public static GameController instance;
 	public Camera cam;
     public Vector2 upperCorner;
     public Vector2 targeCamtWidth;
-    public float maxWidth;
-    public float maxHeigth;
+    private float maxWidth;
+    private float maxHeigth;
     public bool gameOver;
     public GameObject gameLooseText;
     public GameObject gameWinText;
     private int score;
     public Text scoreText;
-    private int lives;
+    public int lives;
     public Text livesText;
     public float initBallSpeed;
     public float initPlayerSpeed;
-    public float poweUpChancePerc;
     public int powerUpFallSpeed;
     private LevelMaker lMaker;
     public GameObject[] block;
@@ -28,9 +28,15 @@ public class GameController : MonoBehaviour {
     public GameObject ball;
     private GameObject initBall;
     private GameObject newBall;
+
+    //Some embelishment to show this variable as a slider on Inspector
+    [Range(0, 100)]
+    public float poweUpChancePerc;
+
 	// Awake is called when the script instance is being loaded.
 	void Awake()
 	{
+        //Check if this is the only instance of this object and if not, kills this instance
 		if (instance == null)
         {
             instance = this;
@@ -38,21 +44,22 @@ public class GameController : MonoBehaviour {
         else if (instance != this)
         {
             Destroy(gameObject);
-
-            
         }
 
+        //Set the camera of the game to the "cam" variable
         if (cam == null)
         {
             cam = Camera.main;
         }
         
+        //Initiate the lmaker variable that will contain the blocks configuration on the screen
         lMaker = new LevelMaker();
+
+        //Initiate and a set some variables usefull to identify the screen borders
         upperCorner = new Vector2(Screen.width, Screen.height);
         targeCamtWidth = GameController.instance.cam.ScreenToWorldPoint(upperCorner);
         maxWidth = targeCamtWidth.x;
         maxHeigth = targeCamtWidth.y;
-        lives = 3;
 
         for (int arrayLin = 0; arrayLin < lMaker.blockTypeArray.GetLength(0); arrayLin++)
         {
