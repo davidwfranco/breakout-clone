@@ -6,9 +6,9 @@ public class BallController : MonoBehaviour {
 	private GameController gControll;
 	private GameObject player;
 	private RaycastHit2D[] hit;
-	private float moveSpeed;
-	private float ballXSpeed;
-	private float ballYSpeed;
+	private float ballSpeed;
+	private float xDirection = 0;
+	private float yDirection;
 	private Vector2[] directions;
 	private GameObject lastcol;
 	private Vector2 upLeft = new Vector2(-1,1);
@@ -27,8 +27,10 @@ public class BallController : MonoBehaviour {
 			upLeft, upRight, downRight, downLeft};
 		gameOn = false;
 		
-		ballXSpeed = Random.Range(-gControll.initBallSpeed, gControll.initBallSpeed);
-		ballYSpeed = Random.Range(0, gControll.initBallSpeed);
+		ballSpeed = gControll.initBallSpeed;
+
+ 		xDirection = Random.Range(-1, 2);
+		yDirection = 1;
 
 		player = GameObject.FindGameObjectsWithTag("Player")[0];
 		if (GameObject.FindGameObjectsWithTag("Ball").Length > 1) {
@@ -47,8 +49,14 @@ public class BallController : MonoBehaviour {
 				if (Input.GetKeyDown(KeyCode.Space) /*|| Input.GetMouseButtonDown(22220)*/ ) {
 					gameOn = true;
 					
-					ballXSpeed = Random.Range(-gControll.initBallSpeed, gControll.initBallSpeed);
-					ballYSpeed = Random.Range(0, gControll.initBallSpeed);
+					xDirection = Random.Range(-1, 2);
+
+					while (xDirection == 0) {
+						xDirection = Random.Range(-1, 2);
+					}
+
+					yDirection = 1;
+					Debug.Log("X = " + xDirection + " / Y = " + yDirection);
 				}
 			} else {
 				//Everything else that happens when the Game has begining and the ball is not sticking to the player
@@ -64,40 +72,40 @@ public class BallController : MonoBehaviour {
 								lastcol = hit[0].transform.gameObject;	
 								
 								if (direction == Vector2.up) {
-									if (ballYSpeed > 0) {							
-										ballYSpeed *= -1;
+									if (yDirection > 0) {							
+										yDirection *= -1;
 									}
 								} else if (direction == Vector2.down) {
-									if (ballYSpeed < 0) {							
-										ballYSpeed *= -1;
+									if (yDirection < 0) {							
+										yDirection *= -1;
 									}
 								} else if (direction == Vector2.right) {
-									if (ballXSpeed > 0) {							
-										ballXSpeed *= -1;
+									if (xDirection > 0) {							
+										xDirection *= -1;
 									}
 								} else if (direction == Vector2.left) {
-									if (ballXSpeed < 0) {							
-										ballXSpeed *= -1;
+									if (xDirection < 0) {							
+										xDirection *= -1;
 									}
 								} else if (direction == upLeft) {
-									if (ballXSpeed < 0 && ballYSpeed > 0) {							
-										ballXSpeed *= -1;
-										ballYSpeed *= -1;
+									if (xDirection < 0 && yDirection > 0) {							
+										xDirection *= -1;
+										yDirection *= -1;
 									}
 								} else if (direction == upRight) {
-									if (ballXSpeed > 0 && ballYSpeed > 0) {							
-										ballXSpeed *= -1;
-										ballYSpeed *= -1;
+									if (xDirection > 0 && yDirection > 0) {							
+										xDirection *= -1;
+										yDirection *= -1;
 									}
 								} else if (direction == downRight) {
-									if (ballXSpeed > 0 && ballYSpeed < 0) {							
-										ballXSpeed *= -1;
-										ballYSpeed *= -1;
+									if (xDirection > 0 && yDirection < 0) {							
+										xDirection *= -1;
+										yDirection *= -1;
 									}
 								} else if (direction == downLeft) {
-									if (ballXSpeed < 0 && ballYSpeed < 0) {							
-										ballXSpeed *= -1;
-										ballYSpeed *= -1;
+									if (xDirection < 0 && yDirection < 0) {							
+										xDirection *= -1;
+										yDirection *= -1;
 									}
 								}
 							}
@@ -115,9 +123,9 @@ public class BallController : MonoBehaviour {
 				}
 				
 				//Activate gravity for some frames to preven the ball of been stuck going sideways
-				if (ballYSpeed == 0) {
+				if (yDirection == 0) {
 					if (frameCount > 300) {
-						ballYSpeed += Random.Range(-0.1f, 0.1f);
+						yDirection += Random.Range(-0.1f, 0.1f);
 						frameCount = 0;
 					} else {
 						frameCount++;
@@ -125,7 +133,7 @@ public class BallController : MonoBehaviour {
 				}				
 
 				//Move player based on the result of the coditions above
-				transform.position = new Vector2(transform.position.x + ballXSpeed, transform.position.y + ballYSpeed);
+				transform.position = new Vector2(transform.position.x + (xDirection * ballSpeed), transform.position.y + (yDirection * ballSpeed));
 			}
 		} else {
 			this.CleanLevel();
@@ -139,21 +147,21 @@ public class BallController : MonoBehaviour {
 	// }
 
 	public void SlowDown(float ratio) {
-		if ((Mathf.Abs(ballXSpeed) * (1.0f - ratio) > 0.05f) || (Mathf.Abs(ballYSpeed) * (1.0f - ratio) > 0.05f))
+		if ((Mathf.Abs(xDirection) * (1.0f - ratio) > 0.05f) || (Mathf.Abs(yDirection) * (1.0f - ratio) > 0.05f))
 		{
 			// Debug.Log("Before = " + ballXSpeed + " / " + ballYSpeed);
-			ballXSpeed *= 1 - ratio;
-			ballYSpeed *= 1 - ratio;
+			xDirection *= 1 - ratio;
+			yDirection *= 1 - ratio;
 			// Debug.Log("After = " + ballXSpeed + " / " + ballYSpeed);
 		}		
 	}
 	
 	public void Accelerate(float ratio) {
-		if ((Mathf.Abs(ballXSpeed) * (1.0f - ratio) < 0.05f) || (Mathf.Abs(ballYSpeed) * (1.0f - ratio) > 0.05f))
+		if ((Mathf.Abs(xDirection) * (1.0f - ratio) < 0.05f) || (Mathf.Abs(yDirection) * (1.0f - ratio) > 0.05f))
 		{
 			// Debug.Log("Before = " + ballXSpeed + " / " + ballYSpeed);
-			ballXSpeed *= 1 - ratio;
-			ballYSpeed *= 1 - ratio;
+			xDirection *= 1 - ratio;
+			yDirection *= 1 - ratio;
 			// Debug.Log("After = " + ballXSpeed + " / " + ballYSpeed);
 		}		
 	}

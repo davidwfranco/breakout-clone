@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class StickyPlayerPowerUp : BasePowerUpController {
 
-    private GameObject ball;
+    private GameObject[] balls;
 
     protected override void ExecPowerUp(Collider2D other)
     {   
-        ball = GameObject.FindGameObjectsWithTag("Ball")[0];
-        ball.gameObject.SendMessage("StickToPlayer");
+        balls = GameObject.FindGameObjectsWithTag("Ball");
+        for (int i = 0; i < balls.Length; i++)
+        {
+            balls[i].gameObject.SendMessage("StickToPlayer");    
+        }        
+        
     }
 }

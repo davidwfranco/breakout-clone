@@ -52,28 +52,31 @@ public class GameController : MonoBehaviour {
             cam = Camera.main;
         }
         
-        //Initiate the lmaker variable that will contain the blocks configuration on the screen
-        lMaker = new LevelMaker();
-
         //Initiate and a set some variables usefull to identify the screen borders
         upperCorner = new Vector2(Screen.width, Screen.height);
         targeCamtWidth = GameController.instance.cam.ScreenToWorldPoint(upperCorner);
         maxWidth = targeCamtWidth.x;
         maxHeigth = targeCamtWidth.y;
 
+        //Initiate the lmaker variable that will contain the blocks configuration on the screen
+        lMaker = new LevelMaker();
+        //Using the information contained on the LevelMaker class to instantiate the block array on the screen
         for (int arrayLin = 0; arrayLin < lMaker.blockTypeArray.GetLength(0); arrayLin++)
         {
             for(int arrayCol = 0; arrayCol < lMaker.blockTypeArray.GetLength(1); arrayCol++){
                 switch (lMaker.blockTypeArray[arrayLin, arrayCol])
                 {
                     case 1:
-                        Instantiate(block[0], new Vector2((float)lMaker.blockPosArray[arrayLin, arrayCol, 0], (float)lMaker.blockPosArray[arrayLin, arrayCol, 1]), Quaternion.identity);
+                        Instantiate(block[0], new Vector2((float)lMaker.blockPosArray[arrayLin, arrayCol, 0], 
+                                (float)lMaker.blockPosArray[arrayLin, arrayCol, 1]), Quaternion.identity);
                         continue;
                     case 2:
-                        Instantiate(block[1], new Vector2((float)lMaker.blockPosArray[arrayLin, arrayCol, 0], (float)lMaker.blockPosArray[arrayLin, arrayCol, 1]), Quaternion.identity);        
+                        Instantiate(block[1], new Vector2((float)lMaker.blockPosArray[arrayLin, arrayCol, 0], 
+                                (float)lMaker.blockPosArray[arrayLin, arrayCol, 1]), Quaternion.identity);        
                         continue;
                     case 3:
-                        Instantiate(block[2], new Vector2((float)lMaker.blockPosArray[arrayLin, arrayCol, 0], (float)lMaker.blockPosArray[arrayLin, arrayCol, 1]), Quaternion.identity);        
+                        Instantiate(block[2], new Vector2((float)lMaker.blockPosArray[arrayLin, arrayCol, 0], 
+                                (float)lMaker.blockPosArray[arrayLin, arrayCol, 1]), Quaternion.identity);        
                         continue;
                     default:
                         continue;
@@ -101,7 +104,7 @@ public class GameController : MonoBehaviour {
 
         if (!gameOver && Input.GetKeyDown(KeyCode.N))
         {
-            newBall =  Instantiate(ball, initBall.transform.position, Quaternion.identity) as GameObject;
+            CreateNewBall();
         }
         //Endgame if all the blocks have been cleaned
         if (GameObject.FindGameObjectsWithTag("Blocks").Length == 0)
@@ -167,5 +170,11 @@ public class GameController : MonoBehaviour {
     public int GetScore()
     {
         return score;
+    }
+
+    public void CreateNewBall() {
+        
+        Vector2 newBallPos = GameObject.FindGameObjectsWithTag("Ball")[0].transform.position;
+        newBall =  Instantiate(ball, newBallPos, Quaternion.identity) as GameObject;
     }
 }

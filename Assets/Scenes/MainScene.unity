@@ -1422,8 +1422,6 @@ MonoBehaviour:
   cam: {fileID: 1307104713}
   upperCorner: {x: 0, y: 0}
   targeCamtWidth: {x: 0, y: 0}
-  maxWidth: 0
-  maxHeigth: 0
   gameOver: 0
   gameLooseText: {fileID: 172866960}
   gameWinText: {fileID: 821075036}
@@ -1432,7 +1430,6 @@ MonoBehaviour:
   livesText: {fileID: 340660211}
   initBallSpeed: 0.1
   initPlayerSpeed: 0.2
-  poweUpChancePerc: 9.9
   powerUpFallSpeed: 2
   block:
   - {fileID: 1846027465766138, guid: 3d8a82eca5d2c452a854998d299a3797, type: 2}
@@ -1440,6 +1437,7 @@ MonoBehaviour:
   - {fileID: 1846027465766138, guid: 40a6defe0af034e1e9d4a2e7c975ec6c, type: 2}
   player: {fileID: 674372189}
   ball: {fileID: 1643152320808614, guid: 4276218ac13944722be443647ebeb69d, type: 2}
+  poweUpChancePerc: 10
 --- !u!1 &1240724758
 GameObject:
   m_ObjectHideFlags: 0
