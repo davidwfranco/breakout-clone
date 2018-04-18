@@ -18,15 +18,16 @@ public class BallController : MonoBehaviour {
 	private bool gameOn;
 	private float frameCount;
 	private bool isPlayerSticky = false;
+	private Animator animator;
 
 
 	// Use this for initialization
 	void Start () {
 		gControll = GameController.instance;
-		directions = new Vector2[8] {Vector2.up, Vector2.right, Vector2.down, Vector2.left, 
+		directions = new Vector2[8] {Vector2.up, Vector2.right, Vector2.down, Vector2.left,
 			upLeft, upRight, downRight, downLeft};
 		gameOn = false;
-		
+
 		ballSpeed = gControll.initBallSpeed;
 
  		xDirection = Random.Range(-1, 2);
@@ -36,19 +37,24 @@ public class BallController : MonoBehaviour {
 		if (GameObject.FindGameObjectsWithTag("Ball").Length > 1) {
 			gameOn = true;
 		}
+
+		animator = GetComponentInChildren<Animator>();
 	}
-	
+
 	// Update is called once per frame
 	void FixedUpdate () {
 		if (!gControll.gameOver)
 		{
 			//Stuck the ball to the player ate the begining of the game
 			if (!gameOn) {
-				transform.position = new Vector2 (player.transform.position.x, 
+				transform.position = new Vector2 (player.transform.position.x,
 						(player.transform.position.y + (player.transform.localScale.y/2) + this.transform.localScale.y/2 + 0.1f));
+				
+				animator.SetBool("HitSomething", false);
+
 				if (Input.GetKeyDown(KeyCode.Space) /*|| Input.GetMouseButtonDown(22220)*/ ) {
 					gameOn = true;
-					
+
 					xDirection = Random.Range(-1, 2);
 
 					while (xDirection == 0) {
@@ -56,7 +62,6 @@ public class BallController : MonoBehaviour {
 					}
 
 					yDirection = 1;
-					Debug.Log("X = " + xDirection + " / Y = " + yDirection);
 				}
 			} else {
 				//Everything else that happens when the Game has begining and the ball is not sticking to the player
@@ -67,49 +72,48 @@ public class BallController : MonoBehaviour {
 
 					if (hit[0].collider != null) {
 						if (hit[0].distance <= (transform.localScale.x/4 * 3) && !hit[0].collider.CompareTag("Floor")) {
-
 							if (lastcol != hit[0].transform.gameObject) {
-								lastcol = hit[0].transform.gameObject;	
-								
+								lastcol = hit[0].transform.gameObject;
+
 								if (direction == Vector2.up) {
-									if (yDirection > 0) {							
-										yDirection *= -1;
+									if (yDirection > 0) {
+										yDirection = -1;
 									}
 								} else if (direction == Vector2.down) {
-									if (yDirection < 0) {							
-										yDirection *= -1;
+									if (yDirection < 0) {
+										yDirection = 1;
 									}
 								} else if (direction == Vector2.right) {
-									if (xDirection > 0) {							
-										xDirection *= -1;
+									if (xDirection > 0) {
+										xDirection = -1;
 									}
 								} else if (direction == Vector2.left) {
-									if (xDirection < 0) {							
-										xDirection *= -1;
+									if (xDirection < 0) {
+										xDirection = 1;
 									}
 								} else if (direction == upLeft) {
-									if (xDirection < 0 && yDirection > 0) {							
-										xDirection *= -1;
-										yDirection *= -1;
+									if (xDirection < 0 && yDirection > 0) {
+										xDirection = 1;
+										yDirection = -1;
 									}
 								} else if (direction == upRight) {
-									if (xDirection > 0 && yDirection > 0) {							
-										xDirection *= -1;
-										yDirection *= -1;
+									if (xDirection > 0 && yDirection > 0) {
+										xDirection = -1;
+										yDirection = -1;
 									}
 								} else if (direction == downRight) {
-									if (xDirection > 0 && yDirection < 0) {							
-										xDirection *= -1;
-										yDirection *= -1;
+									if (xDirection > 0 && yDirection < 0) {
+										xDirection = -1;
+										yDirection = 1;
 									}
 								} else if (direction == downLeft) {
-									if (xDirection < 0 && yDirection < 0) {							
-										xDirection *= -1;
-										yDirection *= -1;
+									if (xDirection < 0 && yDirection < 0) {
+										xDirection = 1;
+										yDirection = 1;
 									}
 								}
 							}
-							
+
 							if (hit[0].collider.CompareTag("Blocks")) {
 								hit[0].transform.gameObject.SendMessage("BallHit");
 							} else if (hit[0].collider.CompareTag("Player") && isPlayerSticky) {
@@ -117,11 +121,20 @@ public class BallController : MonoBehaviour {
 								isPlayerSticky = false;
 							} else if (hit[0].collider.CompareTag("Boundaries")) {
 								hit[0].transform.gameObject.SendMessage("Wobble");
-							} 
+							} else if (hit[0].collider.CompareTag("Player")) {
+								float collisionPos = ballCollision(this.transform.position,
+									hit[0].collider.transform.position, hit[0].collider.transform.localScale.x );
+								if (collisionPos > 0){
+									xDirection = 1;
+								} else {
+									xDirection = -1;
+								}
+								animator.SetBool("HitSomething", true);
+							}
 						}
 					}
 				}
-				
+
 				//Activate gravity for some frames to preven the ball of been stuck going sideways
 				if (yDirection == 0) {
 					if (frameCount > 300) {
@@ -130,40 +143,37 @@ public class BallController : MonoBehaviour {
 					} else {
 						frameCount++;
 					}
-				}				
+				}
 
 				//Move player based on the result of the coditions above
-				transform.position = new Vector2(transform.position.x + (xDirection * ballSpeed), transform.position.y + (yDirection * ballSpeed));
+				transform.position = new Vector2(transform.position.x + (xDirection * ballSpeed),
+												transform.position.y + (yDirection * ballSpeed));
 			}
 		} else {
 			this.CleanLevel();
 		}
 	}
 
- 	// // Create a function that receives the ball position, the player position and the player width
-	// // with this it returns the collision pos
-	// private float ballCollision( Vector2 ballPos, Vector2 playerPos, float playerWidth) {
-	// 	return (ballPos.x - playerPos.x) / playerWidth;
-	// }
+ 	// Create a function that receives the ball position, the player position and the player width
+	// with this it returns the collision pos
+	private float ballCollision( Vector2 ballPos, Vector2 playerPos, float playerWidth) {
+		return (ballPos.x - playerPos.x) / playerWidth;
+	}
 
 	public void SlowDown(float ratio) {
 		if ((Mathf.Abs(xDirection) * (1.0f - ratio) > 0.05f) || (Mathf.Abs(yDirection) * (1.0f - ratio) > 0.05f))
 		{
-			// Debug.Log("Before = " + ballXSpeed + " / " + ballYSpeed);
 			xDirection *= 1 - ratio;
 			yDirection *= 1 - ratio;
-			// Debug.Log("After = " + ballXSpeed + " / " + ballYSpeed);
-		}		
+		}
 	}
-	
+
 	public void Accelerate(float ratio) {
 		if ((Mathf.Abs(xDirection) * (1.0f - ratio) < 0.05f) || (Mathf.Abs(yDirection) * (1.0f - ratio) > 0.05f))
 		{
-			// Debug.Log("Before = " + ballXSpeed + " / " + ballYSpeed);
 			xDirection *= 1 - ratio;
 			yDirection *= 1 - ratio;
-			// Debug.Log("After = " + ballXSpeed + " / " + ballYSpeed);
-		}		
+		}
 	}
 
 	public void CleanLevel() {
@@ -172,11 +182,6 @@ public class BallController : MonoBehaviour {
 
 	public void StickToPlayer() {
 		isPlayerSticky = true;
-	}
-
-	public void SetGameOn(){
-		Debug.Log("Set Game On.");
-		gameOn = true;
 	}
 
 	void OnTriggerEnter2D(Collider2D other)

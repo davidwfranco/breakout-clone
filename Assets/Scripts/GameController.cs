@@ -10,8 +10,8 @@ public class GameController : MonoBehaviour {
 	public Camera cam;
     public Vector2 upperCorner;
     public Vector2 targeCamtWidth;
-    private float maxWidth;
-    private float maxHeigth;
+    //private float maxWidth;
+    //private float maxHeigth;
     public bool gameOver;
     public GameObject gameLooseText;
     public GameObject gameWinText;
@@ -51,12 +51,12 @@ public class GameController : MonoBehaviour {
         {
             cam = Camera.main;
         }
-        
+
         //Initiate and a set some variables usefull to identify the screen borders
         upperCorner = new Vector2(Screen.width, Screen.height);
         targeCamtWidth = GameController.instance.cam.ScreenToWorldPoint(upperCorner);
-        maxWidth = targeCamtWidth.x;
-        maxHeigth = targeCamtWidth.y;
+        // maxWidth = targeCamtWidth.x;
+        // maxHeigth = targeCamtWidth.y;
 
         //Initiate the lmaker variable that will contain the blocks configuration on the screen
         lMaker = new LevelMaker();
@@ -67,24 +67,25 @@ public class GameController : MonoBehaviour {
                 switch (lMaker.blockTypeArray[arrayLin, arrayCol])
                 {
                     case 1:
-                        Instantiate(block[0], new Vector2((float)lMaker.blockPosArray[arrayLin, arrayCol, 0], 
+                        Instantiate(block[0], new Vector2((float)lMaker.blockPosArray[arrayLin, arrayCol, 0],
                                 (float)lMaker.blockPosArray[arrayLin, arrayCol, 1]), Quaternion.identity);
                         continue;
                     case 2:
-                        Instantiate(block[1], new Vector2((float)lMaker.blockPosArray[arrayLin, arrayCol, 0], 
-                                (float)lMaker.blockPosArray[arrayLin, arrayCol, 1]), Quaternion.identity);        
+                        Instantiate(block[1], new Vector2((float)lMaker.blockPosArray[arrayLin, arrayCol, 0],
+                                (float)lMaker.blockPosArray[arrayLin, arrayCol, 1]), Quaternion.identity);
                         continue;
                     case 3:
-                        Instantiate(block[2], new Vector2((float)lMaker.blockPosArray[arrayLin, arrayCol, 0], 
-                                (float)lMaker.blockPosArray[arrayLin, arrayCol, 1]), Quaternion.identity);        
+                        Instantiate(block[2], new Vector2((float)lMaker.blockPosArray[arrayLin, arrayCol, 0],
+                                (float)lMaker.blockPosArray[arrayLin, arrayCol, 1]), Quaternion.identity);
                         continue;
                     default:
                         continue;
                 }
             }
         }
-        initBall = Instantiate(ball,new Vector2 (player.transform.position.x, 
-            (player.transform.position.y + (player.transform.localScale.y/2) + ball.transform.localScale.y/2 + 0.1f)), Quaternion.identity) as GameObject;
+        initBall = Instantiate(ball,new Vector2 (player.transform.position.x,
+            (player.transform.position.y + (player.transform.localScale.y/2) + ball.transform.localScale.y/2 + 0.1f)),
+            Quaternion.identity) as GameObject;
 	}
 
 	// Update is called once per frame
@@ -94,7 +95,7 @@ public class GameController : MonoBehaviour {
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
-	
+
     	//Restart the Game
 		if (gameOver && Input.GetKeyDown("space"))
 		{
@@ -139,7 +140,7 @@ public class GameController : MonoBehaviour {
     public void Endgame(string endCondition)
 	{
         gameOver = true;
-        
+
         scoreText.gameObject.SetActive(false);
         livesText.gameObject.SetActive(false);
 
@@ -173,7 +174,7 @@ public class GameController : MonoBehaviour {
     }
 
     public void CreateNewBall() {
-        
+
         Vector2 newBallPos = GameObject.FindGameObjectsWithTag("Ball")[0].transform.position;
         newBall =  Instantiate(ball, newBallPos, Quaternion.identity) as GameObject;
     }

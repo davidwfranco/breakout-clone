@@ -20,7 +20,6 @@ public class ballTestRC : MonoBehaviour {
 		ballYSpeed = Random.Range(-moveSpeed, moveSpeed);
 		directions = new Vector2[] {Vector2.up, Vector2.right, Vector2.down, Vector2.left, 
 			upLeft, upRight, downRight, downLeft};
-		Debug.Log(directions.GetLength(0));
 	}
 
 	// Update is called once per frame

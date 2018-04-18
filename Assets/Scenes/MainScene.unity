@@ -1428,7 +1428,7 @@ MonoBehaviour:
   scoreText: {fileID: 1525101852}
   lives: 5
   livesText: {fileID: 340660211}
-  initBallSpeed: 0.1
+  initBallSpeed: 0.07
   initPlayerSpeed: 0.2
   powerUpFallSpeed: 2
   block:
