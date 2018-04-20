@@ -18,8 +18,7 @@ public class BallController : MonoBehaviour {
 	private bool gameOn;
 	private float frameCount;
 	private bool isPlayerSticky = false;
-	private Animator animator;
-
+	//private Animator anim;
 
 	// Use this for initialization
 	void Start () {
@@ -38,7 +37,7 @@ public class BallController : MonoBehaviour {
 			gameOn = true;
 		}
 
-		animator = GetComponentInChildren<Animator>();
+		//anim = GetComponentInChildren<Animator>();
 	}
 
 	// Update is called once per frame
@@ -50,9 +49,7 @@ public class BallController : MonoBehaviour {
 				transform.position = new Vector2 (player.transform.position.x,
 						(player.transform.position.y + (player.transform.localScale.y/2) + this.transform.localScale.y/2 + 0.1f));
 				
-				animator.SetBool("HitSomething", false);
-
-				if (Input.GetKeyDown(KeyCode.Space) /*|| Input.GetMouseButtonDown(22220)*/ ) {
+				if (Input.GetKeyDown(KeyCode.Space) /*|| Input.GetMouseButtonDown(0)*/ ) {
 					gameOn = true;
 
 					xDirection = Random.Range(-1, 2);
@@ -77,39 +74,39 @@ public class BallController : MonoBehaviour {
 
 								if (direction == Vector2.up) {
 									if (yDirection > 0) {
-										yDirection = -1;
+										yDirection *= -1;
 									}
 								} else if (direction == Vector2.down) {
 									if (yDirection < 0) {
-										yDirection = 1;
+										yDirection *= -1;
 									}
 								} else if (direction == Vector2.right) {
 									if (xDirection > 0) {
-										xDirection = -1;
+										xDirection *= -1;
 									}
 								} else if (direction == Vector2.left) {
 									if (xDirection < 0) {
-										xDirection = 1;
+										xDirection *= -1;
 									}
 								} else if (direction == upLeft) {
 									if (xDirection < 0 && yDirection > 0) {
-										xDirection = 1;
-										yDirection = -1;
+										xDirection *= -1;
+										yDirection *= -1;
 									}
 								} else if (direction == upRight) {
 									if (xDirection > 0 && yDirection > 0) {
-										xDirection = -1;
-										yDirection = -1;
+										xDirection *= -1;
+										yDirection *= -1;
 									}
 								} else if (direction == downRight) {
 									if (xDirection > 0 && yDirection < 0) {
-										xDirection = -1;
-										yDirection = 1;
+										xDirection *= -1;
+										yDirection *= -1;
 									}
 								} else if (direction == downLeft) {
 									if (xDirection < 0 && yDirection < 0) {
-										xDirection = 1;
-										yDirection = 1;
+										xDirection *= -1;
+										yDirection *= -1;
 									}
 								}
 							}
@@ -122,16 +119,15 @@ public class BallController : MonoBehaviour {
 							} else if (hit[0].collider.CompareTag("Boundaries")) {
 								hit[0].transform.gameObject.SendMessage("Wobble");
 							} else if (hit[0].collider.CompareTag("Player")) {
+								
+								// If the object of collision 
 								float collisionPos = ballCollision(this.transform.position,
 									hit[0].collider.transform.position, hit[0].collider.transform.localScale.x );
-								if (collisionPos > 0){
-									xDirection = 1;
-								} else {
-									xDirection = -1;
-								}
-								animator.SetBool("HitSomething", true);
+								xDirection = (collisionPos * 2);
+								
+								//anim.SetTrigger("HitPlayer");
 							}
-						}
+						} 
 					}
 				}
 
