@@ -9,6 +9,6 @@ public class BallSpeedDownPowerUp : BasePowerUpController {
     protected override void ExecPowerUp(Collider2D other)
     {   
         ball = GameObject.FindGameObjectsWithTag("Ball")[0];
-        ball.gameObject.SendMessage("SlowDown", 0.3f);
+        ball.gameObject.SendMessage("SlowDown", 0.4f);
     }
 }

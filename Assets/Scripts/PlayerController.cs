@@ -6,12 +6,13 @@ public class PlayerController : MonoBehaviour {
 	RaycastHit2D[] hit;
 	Vector2[] directions;
 	private Vector2 rawPosition;
-	private Vector2 targetPotision;
+	private Vector2 targetPosition;
 	private float targetWidth;
 	private GameController gControl;
 	private float moveSpeed;
 	private float moveHDir;
 	private float wallPos;
+	private int btnPress;
 
 	// Use this for initialization
 	void Start () {
@@ -32,23 +33,39 @@ public class PlayerController : MonoBehaviour {
 					{
 						wallPos = hit[1].collider.transform.position.x;
 						if ((wallPos > this.transform.position.x && moveHDir < 0) || 
-						(wallPos < this.transform.position.x && moveHDir > 0)) {
+							(wallPos < this.transform.position.x && moveHDir > 0)) {
 							moveSpeed = gControl.initPlayerSpeed;
 						} else {
 							moveSpeed = 0;
 						}
-					}
+					} else {
+						// Keyboard control
+						if (Input.GetAxisRaw("Horizontal") != 0)
+						{
+							moveHDir = Input.GetAxisRaw("Horizontal");
+							Debug.Log("Hor Dir = " + moveHDir + " / Move Speed = " + moveSpeed);
+							targetPosition = new Vector2((transform.position.x + (moveSpeed * moveHDir)), transform.position.y);
+							transform.position = targetPosition;
+						} else {
+							if (moveSpeed > 0)
+							{
+								moveSpeed /= 1.1f;	
+							}
+							Debug.Log("Hor Dir = " + Input.GetAxisRaw("Horizontal") + " / Move Speed = " + moveSpeed);
+							targetPosition = new Vector2((transform.position.x + (moveSpeed * moveHDir)), transform.position.y);
+							transform.position = targetPosition;
+						} 
+					} 
 				}
 			}
-			// Keyboard control
-			moveHDir = Input.GetAxisRaw("Horizontal");
-			targetPotision = new Vector2((transform.position.x + (moveSpeed * moveHDir)), transform.position.y);
+			
+			
 
 			// Mouse Controller
  			//rawPosition = gControl.cam.ScreenToWorldPoint (Input.mousePosition);
 			//targetPotision = new Vector2 (rawPosition.x, transform.position.y);
 			
-			transform.position = targetPotision;
+			
 		} else {
 			transform.position = new Vector2 (0.0f, transform.position.y);
 		}

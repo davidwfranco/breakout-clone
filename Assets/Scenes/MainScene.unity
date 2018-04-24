@@ -355,6 +355,7 @@ RectTransform:
   m_Children:
   - {fileID: 189384111}
   - {fileID: 1368150108}
+  - {fileID: 1417845152}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -598,14 +599,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.20424795, g: 0.0035588269, b: 0.484, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300220, guid: 5df7ac531858f45078d1febc2b9b03af, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4852b33733e6b4a7fb25df16d0dbbb9f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -686,7 +687,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Lives: 3'
+  m_Text: 'L: 3'
 --- !u!222 &340660212
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1254,7 +1255,7 @@ RectTransform:
   m_Children:
   - {fileID: 1562017161}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1426,18 +1427,18 @@ MonoBehaviour:
   gameLooseText: {fileID: 172866960}
   gameWinText: {fileID: 821075036}
   scoreText: {fileID: 1525101852}
-  lives: 5
+  lives: 0
   livesText: {fileID: 340660211}
-  initBallSpeed: 0.05
+  initBallSpeed: 0.02
   initPlayerSpeed: 0.2
-  powerUpFallSpeed: 2
+  powerUpFallSpeed: 1
   block:
   - {fileID: 1846027465766138, guid: 3d8a82eca5d2c452a854998d299a3797, type: 2}
   - {fileID: 1846027465766138, guid: 77888fe54d5c14c9db57eea7a5a377e5, type: 2}
   - {fileID: 1846027465766138, guid: 40a6defe0af034e1e9d4a2e7c975ec6c, type: 2}
   player: {fileID: 674372189}
   ball: {fileID: 1643152320808614, guid: 4276218ac13944722be443647ebeb69d, type: 2}
-  poweUpChancePerc: 10
+  poweUpChancePerc: 0
 --- !u!1 &1240724758
 GameObject:
   m_ObjectHideFlags: 0
@@ -1737,12 +1738,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1417845149}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -17280}
+  m_LocalScale: {x: 192, y: 192, z: 192}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_Father: {fileID: 172866964}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1459111817
 GameObject:
@@ -1871,7 +1872,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1525101850
 GameObject:
@@ -1940,7 +1941,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Score: 0'
+  m_Text: 'S: 0'
 --- !u!222 &1525101853
 CanvasRenderer:
   m_ObjectHideFlags: 0
