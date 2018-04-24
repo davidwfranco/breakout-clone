@@ -584,7 +584,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: MainMenu
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &312595041
@@ -1427,10 +1427,10 @@ MonoBehaviour:
   gameLooseText: {fileID: 172866960}
   gameWinText: {fileID: 821075036}
   scoreText: {fileID: 1525101852}
-  lives: 0
+  lives: 5
   livesText: {fileID: 340660211}
-  initBallSpeed: 0.02
-  initPlayerSpeed: 0.2
+  initBallSpeed: 5
+  initPlayerSpeed: 8
   powerUpFallSpeed: 1
   block:
   - {fileID: 1846027465766138, guid: 3d8a82eca5d2c452a854998d299a3797, type: 2}
@@ -1439,6 +1439,7 @@ MonoBehaviour:
   player: {fileID: 674372189}
   ball: {fileID: 1643152320808614, guid: 4276218ac13944722be443647ebeb69d, type: 2}
   poweUpChancePerc: 0
+  objStopFriction: 1.2
 --- !u!1 &1240724758
 GameObject:
   m_ObjectHideFlags: 0
@@ -1867,12 +1868,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1498893995}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.016741604, y: 2.1960027, z: 89.99596}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -7889.385, z: -17280}
+  m_LocalScale: {x: 192, y: 1786.0862, z: 192}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_Father: {fileID: 1562017161}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1525101850
 GameObject:
@@ -1978,6 +1979,7 @@ RectTransform:
   - {fileID: 1525101851}
   - {fileID: 340660210}
   - {fileID: 312595039}
+  - {fileID: 1498893997}
   m_Father: {fileID: 849394227}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

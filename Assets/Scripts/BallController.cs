@@ -18,6 +18,7 @@ public class BallController : MonoBehaviour {
 	private bool gameOn;
 	private float frameCount;
 	private bool isPlayerSticky = false;
+	private Vector2 targetPosition;
 	//private Animator anim;
 
 	// Use this for initialization
@@ -142,8 +143,11 @@ public class BallController : MonoBehaviour {
 				}
 
 				//Move player based on the result of the coditions above
-				transform.position = new Vector2(transform.position.x + (xDirection * ballSpeed),
-												transform.position.y + (yDirection * ballSpeed));
+				
+				targetPosition = new Vector2(this.transform.position.x + (xDirection * ballSpeed),
+										this.transform.position.y + (yDirection * ballSpeed));
+		
+				transform.position = Vector2.Lerp(this.transform.position, targetPosition, Time.deltaTime);				
 			}
 		} else {
 			this.CleanLevel();

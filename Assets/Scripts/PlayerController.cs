@@ -13,14 +13,18 @@ public class PlayerController : MonoBehaviour {
 	private float moveHDir;
 	private float wallPos;
 	private int btnPress;
+	private bool hitLeft;
+	private bool hitRight;
+
 
 	// Use this for initialization
 	void Start () {
 		gControl = GameController.instance;
-		moveSpeed = gControl.initPlayerSpeed;
 		directions = new Vector2[2] {Vector2.right, Vector2.left};
+		hitLeft = false;
+		hitRight = false;
 	}
-	
+
 	// Update is called once per physics timestamp
 	void FixedUpdate () {
 		if (!gControl.gameOver) {
@@ -29,55 +33,66 @@ public class PlayerController : MonoBehaviour {
 				Debug.DrawRay(transform.position, dir);
 
 				if (hit[1].collider != null) {
-					if (hit[1].distance <= (transform.localScale.x/2 + 0.1f))
-					{
-						wallPos = hit[1].collider.transform.position.x;
-						if ((wallPos > this.transform.position.x && moveHDir < 0) || 
-							(wallPos < this.transform.position.x && moveHDir > 0)) {
-							moveSpeed = gControl.initPlayerSpeed;
+
+					// Keyboard control
+					if (Input.GetAxisRaw("Horizontal") != 0) {
+						moveHDir = Input.GetAxisRaw("Horizontal");
+
+						if (hit[1].distance <= (transform.localScale.x * 0.55f)) {
+
+							if (dir == Vector2.left) {
+								hitLeft = true;
+							} else {
+								hitRight = true;
+							}
+
+							wallPos = hit[1].collider.transform.position.x;
+
+							// Condition that guarantee that the paddle do not pass the borders of the screen
+							if ((wallPos > this.transform.position.x && moveHDir < 0) ||
+								(wallPos < this.transform.position.x && moveHDir > 0)) {
+									moveSpeed = gControl.initPlayerSpeed;
+							} else {
+								moveSpeed = 0;
+							}
 						} else {
-							moveSpeed = 0;
+							if (dir == Vector2.left) {
+								hitLeft = false;
+							} else {
+								hitRight = false;
+							}
+
+							if (!hitRight && !hitLeft)
+							{
+								moveSpeed = gControl.initPlayerSpeed;
+							}
 						}
 					} else {
-						// Keyboard control
-						if (Input.GetAxisRaw("Horizontal") != 0)
-						{
-							moveHDir = Input.GetAxisRaw("Horizontal");
-							Debug.Log("Hor Dir = " + moveHDir + " / Move Speed = " + moveSpeed);
-							targetPosition = new Vector2((transform.position.x + (moveSpeed * moveHDir)), transform.position.y);
-							transform.position = targetPosition;
-						} else {
-							if (moveSpeed > 0)
-							{
-								moveSpeed /= 1.1f;	
-							}
-							Debug.Log("Hor Dir = " + Input.GetAxisRaw("Horizontal") + " / Move Speed = " + moveSpeed);
-							targetPosition = new Vector2((transform.position.x + (moveSpeed * moveHDir)), transform.position.y);
-							transform.position = targetPosition;
-						} 
-					} 
+						moveSpeed /= gControl.objStopFriction;
+					}
 				}
 			}
-			
-			
 
 			// Mouse Controller
  			//rawPosition = gControl.cam.ScreenToWorldPoint (Input.mousePosition);
 			//targetPotision = new Vector2 (rawPosition.x, transform.position.y);
-			
-			
+
+			targetPosition = new Vector2((transform.position.x + (moveSpeed * moveHDir)), transform.position.y);
+			//targetPosition = new Vector2((transform.position.x + (moveSpeed * moveHDir) * Time.deltaTime), transform.position.y);
 		} else {
-			transform.position = new Vector2 (0.0f, transform.position.y);
+			targetPosition = new Vector2 (0.0f, transform.position.y);
 		}
+
+		transform.position = Vector2.Lerp(transform.position, targetPosition, Time.deltaTime);
 	}
 
 	public void Enlarge(float ratio) {
 		if ((transform.localScale.x * (1f + ratio)) <= gControl.targeCamtWidth.x)
 		{
-			transform.localScale = new Vector2(transform.localScale.x * (1f + ratio), transform.localScale.y);	
+			transform.localScale = new Vector2(transform.localScale.x * (1f + ratio), transform.localScale.y);
 		}
 	}
-	
+
 	public void Contract(float ratio) {
 		transform.localScale = new Vector2(transform.localScale.x * (1f - ratio), transform.localScale.y);
 	}
@@ -85,5 +100,5 @@ public class PlayerController : MonoBehaviour {
 	void CleanLevel()
 	{
 		Destroy(gameObject);
-	}	
+	}
 }

@@ -33,6 +33,9 @@ public class GameController : MonoBehaviour {
     [Range(0, 100)]
     public float poweUpChancePerc;
 
+    [Range(1.05f, 2.0f)]
+    public float objStopFriction;
+
 	// Awake is called when the script instance is being loaded.
 	void Awake()
 	{
