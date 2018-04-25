@@ -1431,7 +1431,7 @@ MonoBehaviour:
   livesText: {fileID: 340660211}
   initBallSpeed: 5
   initPlayerSpeed: 8
-  powerUpFallSpeed: 1
+  powerUpFallSpeed: 3
   block:
   - {fileID: 1846027465766138, guid: 3d8a82eca5d2c452a854998d299a3797, type: 2}
   - {fileID: 1846027465766138, guid: 77888fe54d5c14c9db57eea7a5a377e5, type: 2}
@@ -1439,7 +1439,10 @@ MonoBehaviour:
   player: {fileID: 674372189}
   ball: {fileID: 1643152320808614, guid: 4276218ac13944722be443647ebeb69d, type: 2}
   poweUpChancePerc: 0
-  objStopFriction: 1.2
+  objStopFriction: 1.305
+  cameraShakeDuration: 0.5
+  cameraShakeIntensity: 0.5
+  cameraShakeDecreaseFactor: 0.2
 --- !u!1 &1240724758
 GameObject:
   m_ObjectHideFlags: 0
@@ -1525,6 +1528,7 @@ GameObject:
   - component: {fileID: 1307104713}
   - component: {fileID: 1307104712}
   - component: {fileID: 1307104711}
+  - component: {fileID: 1307104715}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -1594,6 +1598,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1307104715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1307104710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca46c9ba45ac4b30b8841149df6811c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camTransform: {fileID: 0}
 --- !u!1 &1368150107
 GameObject:
   m_ObjectHideFlags: 0
