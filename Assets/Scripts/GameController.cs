@@ -39,6 +39,7 @@ public class GameController : MonoBehaviour {
     public float cameraShakeDuration;
     public float cameraShakeIntensity;
     public float cameraShakeDecreaseFactor;
+    public string cameraShakeDirection;
 
 	// Awake is called when the script instance is being loaded.
 	void Awake()
@@ -105,7 +106,7 @@ public class GameController : MonoBehaviour {
 
         if (!gameOver && Input.GetKeyDown(KeyCode.S))
         {
-            cam.GetComponent<CameraShake>().ShakeCamera(cameraShakeDuration, cameraShakeIntensity, cameraShakeDecreaseFactor);
+            cam.GetComponent<CameraShake>().ShakeCamera(cameraShakeDuration, cameraShakeIntensity, cameraShakeDecreaseFactor, cameraShakeDirection);
         }
 
     	//Restart the Game

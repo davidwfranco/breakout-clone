@@ -49,7 +49,7 @@ public class BallController : MonoBehaviour {
 			if (!gameOn) {
 				transform.position = new Vector2 (player.transform.position.x,
 						(player.transform.position.y + (player.transform.localScale.y/2) + this.transform.localScale.y/2 + 0.1f));
-				
+
 				if (Input.GetKeyDown(KeyCode.Space) /*|| Input.GetMouseButtonDown(0)*/ ) {
 					gameOn = true;
 
@@ -114,21 +114,30 @@ public class BallController : MonoBehaviour {
 
 							if (hit[0].collider.CompareTag("Blocks")) {
 								hit[0].transform.gameObject.SendMessage("BallHit");
+			
+								GameObject[] blocks;
+            
+								blocks = GameObject.FindGameObjectsWithTag("Blocks");
+								for (int i = 0; i < blocks.Length; i++) {
+									if (blocks[i].GetComponent<BaseBlockController>().gameObject != hit[0].collider.gameObject) {
+										StartCoroutine(blocks[i].GetComponent<BaseBlockController>().ChangeColor());
+									}
+								}
 							} else if (hit[0].collider.CompareTag("Player") && isPlayerSticky) {
 								gameOn = false;
 								isPlayerSticky = false;
 							} else if (hit[0].collider.CompareTag("Boundaries")) {
 								hit[0].transform.gameObject.SendMessage("Wobble");
 							} else if (hit[0].collider.CompareTag("Player")) {
-								
-								// If the object of collision 
+								// If the object of collision
 								float collisionPos = ballCollision(this.transform.position,
 									hit[0].collider.transform.position, hit[0].collider.transform.localScale.x );
 								xDirection = (collisionPos * 2);
-								
+								player.gameObject.SendMessage("Wobble");
+
 								//anim.SetTrigger("HitPlayer");
 							}
-						} 
+						}
 					}
 				}
 
@@ -143,11 +152,11 @@ public class BallController : MonoBehaviour {
 				}
 
 				//Move player based on the result of the coditions above
-				
+
 				targetPosition = new Vector2(this.transform.position.x + (xDirection * ballSpeed),
 										this.transform.position.y + (yDirection * ballSpeed));
-		
-				transform.position = Vector2.Lerp(this.transform.position, targetPosition, Time.deltaTime);				
+
+				transform.position = Vector2.Lerp(this.transform.position, targetPosition, Time.deltaTime);
 			}
 		} else {
 			this.CleanLevel();

@@ -15,8 +15,8 @@ public class CameraShake : MonoBehaviour
 	private float decreaseFactor;
 	private bool isActive;
 	private GameController gControll;
-	
-	Vector3 originalPos;
+	private Vector3 direction;
+	private Vector3 originalPos;
 	
 	void Awake()
 	{
@@ -37,8 +37,7 @@ public class CameraShake : MonoBehaviour
 		if (isActive) {
 			if (shakeDuration > 0)
 			{
-				camTransform.localPosition = originalPos + Random.insideUnitSphere * shakeAmount;
-				
+				camTransform.localPosition = originalPos + direction * shakeAmount;
 				shakeDuration -= Time.deltaTime * decreaseFactor;
 			}
 			else
@@ -49,11 +48,29 @@ public class CameraShake : MonoBehaviour
 		}
 	}
 
-	public void ShakeCamera(float duration, float intensity, float decFactor) {
+	public void ShakeCamera(float duration, float intensity, float decFactor, string dir) {
 		isActive = true;
 		
 		shakeDuration = duration;
 		shakeAmount = intensity;
 		decreaseFactor = decFactor;
+		switch (dir) {
+			case "up":
+				direction = Vector2.up;
+				break;
+			case "down":
+				direction = Vector2.down;
+				break;
+			case "left":
+				direction = Vector2.left;
+				break;
+			case "right":
+				direction = Vector2.right;
+				break;
+			default:
+				direction = Random.insideUnitSphere;
+				break;
+		}
+		
 	}
 }

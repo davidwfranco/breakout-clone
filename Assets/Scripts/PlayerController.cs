@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour {
 	private int btnPress;
 	private bool hitLeft;
 	private bool hitRight;
+	private Animator anim;
 
 
 	// Use this for initialization
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour {
 		directions = new Vector2[2] {Vector2.right, Vector2.left};
 		hitLeft = false;
 		hitRight = false;
+		anim = GetComponentInChildren<Animator>();
 	}
 
 	// Update is called once per physics timestamp
@@ -95,6 +97,10 @@ public class PlayerController : MonoBehaviour {
 
 	public void Contract(float ratio) {
 		transform.localScale = new Vector2(transform.localScale.x * (1f - ratio), transform.localScale.y);
+	}
+
+	public void Wobble() {
+		anim.SetTrigger("StartWobble");
 	}
 
 	void CleanLevel()
