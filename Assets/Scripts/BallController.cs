@@ -69,7 +69,7 @@ public class BallController : MonoBehaviour {
 					// Debug.DrawRay(transform.position, direction);
 
 					if (hit[0].collider != null) {
-						if (hit[0].distance <= (transform.localScale.x/4 * 3) && !hit[0].collider.CompareTag("Floor")) {
+						if (hit[0].distance <= (transform.localScale.x/4 * 3)) {
 							if (lastcol != hit[0].transform.gameObject) {
 								lastcol = hit[0].transform.gameObject;
 
@@ -112,15 +112,24 @@ public class BallController : MonoBehaviour {
 								}
 							}
 
-							if (hit[0].collider.CompareTag("Blocks")) {
-								hit[0].transform.gameObject.SendMessage("BallHit");
-			
-								GameObject[] blocks;
-            
-								blocks = GameObject.FindGameObjectsWithTag("Blocks");
-								for (int i = 0; i < blocks.Length; i++) {
-									if (blocks[i].GetComponent<BaseBlockController>().gameObject != hit[0].collider.gameObject) {
-										StartCoroutine(blocks[i].GetComponent<BaseBlockController>().ChangeColor());
+							if (hit[0].collider.CompareTag("Floor") && !gControll.safeFloor) {
+								if (GameObject.FindGameObjectsWithTag("Ball").Length > 1) {
+									Destroy(gameObject);
+								} else {
+									gControll.LoseLife();
+									gameOn=false;
+								}
+							} else if (hit[0].collider.CompareTag("Blocks")) {
+								if (!gControll.unbreakableBlocks) {
+									hit[0].transform.gameObject.SendMessage("BallHit");
+				
+									GameObject[] blocks;
+				
+									blocks = GameObject.FindGameObjectsWithTag("Blocks");
+									for (int i = 0; i < blocks.Length; i++) {
+										if (blocks[i].GetComponent<BaseBlockController>().gameObject != hit[0].collider.gameObject) {
+											StartCoroutine(blocks[i].GetComponent<BaseBlockController>().ChangeColor());
+										}
 									}
 								}
 							} else if (hit[0].collider.CompareTag("Player") && isPlayerSticky) {
@@ -195,13 +204,6 @@ public class BallController : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.GetComponent<Collider2D>().CompareTag("Floor")) {
-			if (GameObject.FindGameObjectsWithTag("Ball").Length > 1) {
-				Destroy(gameObject);
-			} else {
-				gControll.LoseLife();
-				gameOn=false;
-			}
-		}
+
 	}
 }

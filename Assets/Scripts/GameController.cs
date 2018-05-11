@@ -52,6 +52,10 @@ public class GameController : MonoBehaviour {
     public float cameraShakeDecreaseFactor;
     public string cameraShakeDirection;
 
+    [Header("Test Functionalities")]
+    public bool safeFloor;
+    public bool unbreakableBlocks;    
+
 	// Awake is called when the script instance is being loaded.
 	void Awake()
 	{

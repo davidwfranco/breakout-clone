@@ -1382,24 +1382,26 @@ MonoBehaviour:
   gameOver: 0
   gameLooseText: {fileID: 172866960}
   gameWinText: {fileID: 821075036}
+  livesText: {fileID: 340660211}
   scoreText: {fileID: 1525101852}
   lives: 5
-  livesText: {fileID: 340660211}
-  initBallSpeed: 5
-  initPlayerSpeed: 10
-  powerUpFallSpeed: 3
   block:
   - {fileID: 1846027465766138, guid: 3d8a82eca5d2c452a854998d299a3797, type: 2}
   - {fileID: 1846027465766138, guid: 77888fe54d5c14c9db57eea7a5a377e5, type: 2}
   - {fileID: 1846027465766138, guid: 40a6defe0af034e1e9d4a2e7c975ec6c, type: 2}
-  player: {fileID: 674372189}
+  powerUpChancePerc: 0
+  powerUpFallSpeed: 3
   ball: {fileID: 1643152320808614, guid: 4276218ac13944722be443647ebeb69d, type: 2}
-  poweUpChancePerc: 0
-  objStopFriction: 1.5
+  initBallSpeed: 5
+  player: {fileID: 674372189}
+  initPlayerSpeed: 10
+  paddleStopFactor: 0
   cameraShakeDuration: 0.07
   cameraShakeIntensity: 0.1
   cameraShakeDecreaseFactor: 1
   cameraShakeDirection: up
+  safeFloor: 1
+  unbreakableBlocks: 1
 --- !u!1 &1172837599
 GameObject:
   m_ObjectHideFlags: 0
