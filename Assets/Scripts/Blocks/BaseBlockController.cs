@@ -16,7 +16,7 @@ public class BaseBlockController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		gControll = GameController.instance;
-		powerUpChance = gControll.poweUpChancePerc/100;
+		powerUpChance = gControll.powerUpChancePerc/100;
 	}
 
 	public void BallHit() {

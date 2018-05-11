@@ -1395,7 +1395,7 @@ MonoBehaviour:
   player: {fileID: 674372189}
   ball: {fileID: 1643152320808614, guid: 4276218ac13944722be443647ebeb69d, type: 2}
   poweUpChancePerc: 0
-  objStopFriction: 1.305
+  objStopFriction: 1.5
   cameraShakeDuration: 0.07
   cameraShakeIntensity: 0.1
   cameraShakeDecreaseFactor: 1

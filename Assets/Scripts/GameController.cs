@@ -10,32 +10,43 @@ public class GameController : MonoBehaviour {
 	public Camera cam;
     public Vector2 upperCorner;
     public Vector2 targeCamtWidth;
-    //private float maxWidth;
-    //private float maxHeigth;
     public bool gameOver;
+    private LevelMaker lMaker;
+    
+
+    [Header("End Game Panels")]
     public GameObject gameLooseText;
     public GameObject gameWinText;
-    private int score;
+
+    [Header("UI")]
+    public Text livesText;
     public Text scoreText;
     public int lives;
-    public Text livesText;
-    public float initBallSpeed;
-    public float initPlayerSpeed;
-    public int powerUpFallSpeed;
-    private LevelMaker lMaker;
+    private int score;
+
+    [Header("Block and PowerUp Settings")]
     public GameObject[] block;
-    public GameObject player;
+    [Range(0, 100)]
+    public float powerUpChancePerc;
+    public int powerUpFallSpeed;
+    
+    
+    [Header("Ball Initial Settings")]
     public GameObject ball;
+    public float initBallSpeed;
+    
     private GameObject initBall;
     private GameObject newBall;
 
-    //Some embelishment to show this variable as a slider on Inspector
-    [Range(0, 100)]
-    public float poweUpChancePerc;
 
-    [Range(1.05f, 2.0f)]
-    public float objStopFriction;
+    [Header ("Paddle Initial Settings")]
+    public GameObject player;   
+    [Range(5f,15f)]
+    public float initPlayerSpeed;
+    [Range(1.01f, 2.0f)]
+    public float paddleStopFactor;
 
+    [Header("CameShake Settings")]
     public float cameraShakeDuration;
     public float cameraShakeIntensity;
     public float cameraShakeDecreaseFactor;

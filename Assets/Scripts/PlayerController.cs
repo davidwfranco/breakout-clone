@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour {
 							}
 						}
 					} else {
-						moveSpeed /= gControl.objStopFriction;
+						moveSpeed /= gControl.paddleStopFactor;
 					}
 				}
 			}
