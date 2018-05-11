@@ -16,7 +16,12 @@ public class PlayerController : MonoBehaviour {
 	private bool hitLeft;
 	private bool hitRight;
 	private Animator anim;
-
+	
+	//Coroutine mvmt
+	private IEnumerator coroutineMove;
+	private Vector3 oldPos;
+	private Vector3 newPos;
+	
 
 	// Use this for initialization
 	void Start () {
@@ -25,11 +30,24 @@ public class PlayerController : MonoBehaviour {
 		hitLeft = false;
 		hitRight = false;
 		anim = GetComponentInChildren<Animator>();
+		coroutineMove = moveRoutine(Vector3.zero);
+		moveSpeed = gControl.initPlayerSpeed;
 	}
 
 	// Update is called once per physics timestamp
 	void FixedUpdate () {
 		if (!gControl.gameOver) {
+			if(
+				//Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved
+				Input.GetMouseButton(0) 
+			){
+				StopCoroutine(coroutineMove);
+				coroutineMove = moveRoutine(Input.mousePosition);
+				StartCoroutine(coroutineMove);
+			}
+
+			//OLD MVMT
+			/* 			
 			foreach (Vector2 dir in directions) {
 				hit = Physics2D.RaycastAll(transform.position, dir);
 				Debug.DrawRay(transform.position, dir);
@@ -80,14 +98,30 @@ public class PlayerController : MonoBehaviour {
 			//targetPotision = new Vector2 (rawPosition.x, transform.position.y);
 
 			targetPosition = new Vector2((transform.position.x + (moveSpeed * moveHDir)), transform.position.y);
-			//targetPosition = new Vector2((transform.position.x + (moveSpeed * moveHDir) * Time.deltaTime), transform.position.y);
+			//targetPosition = new Vector2((transform.position.x + (moveSpeed * moveHDir) * Time.deltaTime), transform.position.y); 
+		*/
 		} else {
 			targetPosition = new Vector2 (0.0f, transform.position.y);
 		}
 
-		transform.position = Vector2.Lerp(transform.position, targetPosition, Time.deltaTime);
+		//transform.position = Vector2.Lerp(transform.position, targetPosition, Time.deltaTime);
 	}
 
+    private IEnumerator moveRoutine(Vector3 touch) {
+        float pos = (Mathf.Abs(Camera.main.ScreenToWorldPoint(touch).x - transform.position.x));
+        Debug.Log("Touch Pos - " + Mathf.Abs(Camera.main.ScreenToWorldPoint(touch).x) + 
+				": Paddle X - "+Mathf.Abs(transform.position.x) + 
+				"=" + (Mathf.Abs(Camera.main.ScreenToWorldPoint(touch).x - transform.position.x))); 
+        while(pos>0.01) {
+            pos = (Mathf.Abs(Camera.main.ScreenToWorldPoint(touch).x - transform.position.x));
+            //Debug.Log(pos);
+            oldPos = transform.position;
+            newPos = new Vector3(Mathf.Lerp(transform.position.x, Camera.main.ScreenToWorldPoint(touch).x, Time.deltaTime * moveSpeed), transform.position.y, transform.position.z);
+            transform.position = new Vector3(Mathf.Clamp(newPos.x, -2f, 2.3f), newPos.y, newPos.z);
+
+            yield return new WaitForEndOfFrame();
+        }
+    }
 	public void Enlarge(float ratio) {
 		if ((transform.localScale.x * (1f + ratio)) <= gControl.targeCamtWidth.x)
 		{

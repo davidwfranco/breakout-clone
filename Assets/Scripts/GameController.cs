@@ -11,8 +11,7 @@ public class GameController : MonoBehaviour {
     public Vector2 upperCorner;
     public Vector2 targeCamtWidth;
     public bool gameOver;
-    private LevelMaker lMaker;
-    
+    private LevelMaker lMaker;  
 
     [Header("End Game Panels")]
     public GameObject gameLooseText;
@@ -30,14 +29,12 @@ public class GameController : MonoBehaviour {
     public float powerUpChancePerc;
     public int powerUpFallSpeed;
     
-    
     [Header("Ball Initial Settings")]
     public GameObject ball;
     public float initBallSpeed;
     
     private GameObject initBall;
     private GameObject newBall;
-
 
     [Header ("Paddle Initial Settings")]
     public GameObject player;   
