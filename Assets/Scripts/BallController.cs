@@ -120,17 +120,10 @@ public class BallController : MonoBehaviour {
 									gameOn=false;
 								}
 							} else if (hit[0].collider.CompareTag("Blocks")) {
+								gControll.Notify("Flicker", hit[0].collider.gameObject);
+								
 								if (!gControll.unbreakableBlocks) {
-									hit[0].transform.gameObject.SendMessage("BallHit");
-				
-									GameObject[] blocks;
-				
-									blocks = GameObject.FindGameObjectsWithTag("Blocks");
-									for (int i = 0; i < blocks.Length; i++) {
-										if (blocks[i].GetComponent<BaseBlockController>().gameObject != hit[0].collider.gameObject) {
-											StartCoroutine(blocks[i].GetComponent<BaseBlockController>().ChangeColor());
-										}
-									}
+									gControll.Notify("BallHit", hit[0].collider.gameObject);
 								}
 							} else if (hit[0].collider.CompareTag("Player") && isPlayerSticky) {
 								gameOn = false;
@@ -200,10 +193,5 @@ public class BallController : MonoBehaviour {
 
 	public void StickToPlayer() {
 		isPlayerSticky = true;
-	}
-
-	void OnTriggerEnter2D(Collider2D other)
-	{
-
 	}
 }

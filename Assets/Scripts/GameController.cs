@@ -53,6 +53,9 @@ public class GameController : MonoBehaviour {
     public bool safeFloor;
     public bool unbreakableBlocks;    
 
+    // Observer Pattern Variables
+    Subject sub = new Subject();
+
 	// Awake is called when the script instance is being loaded.
 	void Awake()
 	{
@@ -108,6 +111,14 @@ public class GameController : MonoBehaviour {
             Quaternion.identity) as GameObject;
 	}
 
+    void Start() {
+        GameObject[] instantiatedBlocks = GameObject.FindGameObjectsWithTag("Blocks");
+
+        foreach (GameObject blk in instantiatedBlocks) {
+            sub.AddObservers(blk.GetComponent<Observer>());
+        }
+    }
+
 	// Update is called once per frame
 	void Update ()
 	{
@@ -139,6 +150,17 @@ public class GameController : MonoBehaviour {
         }
 	}
 
+    public void Notify(string ev, GameObject obj) {
+        sub.Notify(ev, obj);
+    }
+    
+    public void AddObs(Observer obs) {
+        sub.AddObservers(obs);
+    }
+    
+    public void RemoveObs(Observer obs) {
+        sub.RemoveObserver(obs);
+    }
     public void Scored()
     {
 		if (!gameOver) {
