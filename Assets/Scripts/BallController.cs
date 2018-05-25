@@ -121,6 +121,7 @@ public class BallController : MonoBehaviour {
 								}
 							} else if (hit[0].collider.CompareTag("Blocks")) {
 								gControll.Notify("Flicker", hit[0].collider.gameObject);
+								this.GetComponent<AudioSource>().Play();
 								
 								if (!gControll.unbreakableBlocks) {
 									gControll.Notify("BallHit", hit[0].collider.gameObject);

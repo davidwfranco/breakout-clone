@@ -111,14 +111,6 @@ public class GameController : MonoBehaviour {
             Quaternion.identity) as GameObject;
 	}
 
-    void Start() {
-        GameObject[] instantiatedBlocks = GameObject.FindGameObjectsWithTag("Blocks");
-
-        foreach (GameObject blk in instantiatedBlocks) {
-            sub.AddObservers(blk.GetComponent<Observer>());
-        }
-    }
-
 	// Update is called once per frame
 	void Update ()
 	{
@@ -154,12 +146,12 @@ public class GameController : MonoBehaviour {
         sub.Notify(ev, obj);
     }
     
-    public void AddObs(Observer obs) {
-        sub.AddObservers(obs);
+    public void AddObs(string subj, Observer obs) {
+        sub.AddObservers(subj, obs);
     }
     
-    public void RemoveObs(Observer obs) {
-        sub.RemoveObserver(obs);
+    public void RemoveObs(string subj, Observer obs) {
+        sub.RemoveObserver(subj, obs);
     }
     public void Scored()
     {

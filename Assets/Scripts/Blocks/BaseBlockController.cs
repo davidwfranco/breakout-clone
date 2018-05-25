@@ -17,6 +17,7 @@ public class BaseBlockController : Observer {
 	void Start () {
 		gControll = GameController.instance;
 		powerUpChance = gControll.powerUpChancePerc/100;
+		gControll.AddObs("block", this);
 	}
 
 	public override void OnNotify(string ev, GameObject obj) {
@@ -43,7 +44,7 @@ public class BaseBlockController : Observer {
 							Instantiate(powerUps[Random.Range(0,powerUps.Length)], powerUpPos, Quaternion.identity);
 						}
 
-						gControll.RemoveObs(this);
+						gControll.RemoveObs("block", this);
 
 						Destroy(gameObject);
 					}
