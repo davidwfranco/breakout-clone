@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 58370253620390536}
   - component: {fileID: 114552054506316804}
   - component: {fileID: 212925586296707694}
-  - component: {fileID: 82604081063929712}
+  - component: {fileID: 82729207998634026}
   m_Layer: 2
   m_Name: Ball
   m_TagString: Ball
@@ -110,7 +110,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!82 &82604081063929712
+--- !u!82 &82729207998634026
 AudioSource:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -122,13 +122,13 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: e96d8aa222faa40baa1c72f69d450eb0, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 2.44
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
+  Priority: 0
+  DopplerLevel: 4.14
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
@@ -159,7 +159,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 2
       time: 0
-      value: 0
+      value: 0.941
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -171,19 +171,19 @@ AudioSource:
     m_Curve:
     - serializedVersion: 2
       time: 0
-      value: 0
+      value: 0.66944444
       inSlope: 0
       outSlope: 0
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 2
       time: 0
-      value: 1
+      value: 0.937
       inSlope: 0
       outSlope: 0
       tangentMode: 0

@@ -21,12 +21,12 @@ public class BaseBlockController : Observer {
 	}
 
 	public override void OnNotify(string ev, GameObject obj) {
-		switch (ev)
+		switch (ev.ToLower())
 		{
-			case "Flicker":
+			case "flicker":
 				StartCoroutine(this.ChangeColor());
 				break;
-			case "BallHit":
+			case "ballhit":
 				if (this.gameObject == obj) {
 					hits ++;
 					if (hits >= blockLife)

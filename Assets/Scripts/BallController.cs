@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallController : MonoBehaviour {
+public class BallController : Observer {
 	private GameController gControll;
 	private GameObject player;
 	private RaycastHit2D[] hit;
@@ -24,6 +24,8 @@ public class BallController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		gControll = GameController.instance;
+		gControll.AddObs("ball", this);
+
 		directions = new Vector2[8] {Vector2.up, Vector2.right, Vector2.down, Vector2.left,
 			upLeft, upRight, downRight, downLeft};
 		gameOn = false;
@@ -121,6 +123,7 @@ public class BallController : MonoBehaviour {
 								}
 							} else if (hit[0].collider.CompareTag("Blocks")) {
 								gControll.Notify("Flicker", hit[0].collider.gameObject);
+								
 								this.GetComponent<AudioSource>().Play();
 								
 								if (!gControll.unbreakableBlocks) {
@@ -172,6 +175,9 @@ public class BallController : MonoBehaviour {
 		return (ballPos.x - playerPos.x) / playerWidth;
 	}
 
+	public override void OnNotify(string ev, GameObject obj) {
+
+	}
 	public void SlowDown(float ratio) {
 		if ((Mathf.Abs(xDirection) * (1.0f - ratio) > 0.05f) || (Mathf.Abs(yDirection) * (1.0f - ratio) > 0.05f))
 		{

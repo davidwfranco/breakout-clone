@@ -83,6 +83,7 @@ MonoBehaviour:
   - {fileID: 1349368861489986, guid: 33eb64611d7ea44f6a9a5f27cf10836c, type: 2}
   - {fileID: 1474849084365400, guid: eb45dd5b4d3dc4483ae7581b6180a47b, type: 2}
   blockLife: 2
+  blockBreakParticle: {fileID: 0}
 --- !u!212 &212668336828638794
 SpriteRenderer:
   m_ObjectHideFlags: 1
