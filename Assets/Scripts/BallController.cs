@@ -50,7 +50,7 @@ public class BallController : Observer {
 			//Stuck the ball to the player ate the begining of the game
 			if (!gameOn) {
 				transform.position = new Vector2 (player.transform.position.x,
-						(player.transform.position.y + (player.transform.localScale.y/2) + this.transform.localScale.y/2 + 0.1f));
+						(player.transform.position.y + (player.transform.localScale.y/2)));
 
 				if (Input.GetKeyDown(KeyCode.Space) /*|| Input.GetMouseButtonDown(0)*/ ) {
 					gameOn = true;
@@ -123,7 +123,7 @@ public class BallController : Observer {
 								}
 							} else if (hit[0].collider.CompareTag("Blocks")) {
 								gControll.Notify("Flicker", hit[0].collider.gameObject);
-								
+
 								this.GetComponent<AudioSource>().Play();
 								
 								if (!gControll.unbreakableBlocks) {

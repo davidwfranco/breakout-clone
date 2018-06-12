@@ -54,7 +54,7 @@ public class GameController : MonoBehaviour {
     public bool unbreakableBlocks;    
 
     // Observer Pattern Variables
-    Subject sub = new Subject();
+    Subject sub = new Subject();    
 
 	// Awake is called when the script instance is being loaded.
 	void Awake()
@@ -111,6 +111,10 @@ public class GameController : MonoBehaviour {
             Quaternion.identity) as GameObject;
 	}
 
+    void Start() {
+        livesText.text = lives.ToString();
+    }
+
 	// Update is called once per frame
 	void Update ()
 	{
@@ -157,7 +161,7 @@ public class GameController : MonoBehaviour {
     {
 		if (!gameOver) {
             score++;
-			scoreText.text = "Score: " + score.ToString();
+			scoreText.text = score.ToString();
 		} else {
 			return;
 		}
@@ -168,7 +172,7 @@ public class GameController : MonoBehaviour {
         lives -= 1;
         if (lives >= 0)
         {
-            livesText.text = "Lives: " + lives.ToString();
+            livesText.text = lives.ToString();
         }
         else
         {
